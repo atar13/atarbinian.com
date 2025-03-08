@@ -1,0 +1,16 @@
+{{ define "main" }}
+  <h1>{{ .Title }}</h1>
+  {{ .Content }}
+  {{ range .Pages }}
+  <a href="{{ .RelPermalink }}">
+    <div class="post-preview">
+      <h1>{{ .LinkTitle }}</h1>
+      {{ with .Params.project.thumbnail }}
+        <img class="repo-thumbnail" src="{{ . }}"/>
+      {{ end }}
+      <br/>
+      {{ .Summary }}
+    </div>
+  </a>
+  {{ end }}
+{{ end }}

@@ -1,0 +1,24 @@
+{{ define "main" }}
+  <h1>{{ .Title }}</h1>
+  {{ .Content }}
+  <div style="display: flex; align-items: center;" >
+      <div class="cards">
+          {{ range .Params.pinned_projects }} 
+              {{ with $.Site.GetPage . }}
+                {{ partial "project-preview.html" . }}
+              {{ end }}
+          {{ end}}
+          {{ range .Params.other_projects }} 
+              {{ with $.Site.GetPage . }}
+                {{ partial "project-preview.html" . }}
+              {{ end }}
+          {{ end}}
+          {{ range .Params.orgs }} 
+              {{ with $.Site.GetPage . }}
+                {{ partial "project-preview.html" . }}
+              {{ end }}
+          {{ end}}
+      </div>
+  </div>
+{{ end }}
+

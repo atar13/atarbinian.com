@@ -1,0 +1,61 @@
+{{ define "main" }}
+  {{ $iosJS := resources.Get "js/ios_version_check.js" | js.Build (dict "params" (dict "packageName" .Title "supportedVersions" .Params.package.supported)) | minify | fingerprint }}
+  <script src="{{ $iosJS.RelPermalink }}" type="text/javascript"> </script>
+  
+  <h1>{{ .Title }}</h1>
+
+  <!-- modified by ios_version_check.js -->
+  <p id="version-support"></p>
+
+  {{ .Summary }}
+  {{ .Content }}
+
+  {{ with .Params.project.screenshots }}
+    <h2>Screenshots:</h2>
+    <div class="gallery">
+        {{ range . }}
+            <img style="max-width: 300px;" src="{{ . }}"></img>
+        {{ end }}
+    </div>
+  {{ end }}
+
+  {{ with .Params.package.features }}
+      <h2>Features:</h2>
+      <ul>
+          {{range . }}
+              <li>{{ . }}</li>
+          {{ end }}
+      </ul>
+  {{ end }}
+
+  {{ with .Params.package.changelog }}
+    {{ if (ge (len .) 1) }}
+    <h2>Changelog:</h2>
+    {{$latest_change := index . 0}}
+    <h3>Latest Version: {{ $latest_change.version }}</h3>
+    <ul>
+    {{range $latest_change.changes}}
+    <li>
+        {{ . }}
+    </li>
+    {{ end }}
+    </ul>
+
+    {{ if (gt (len .) 1) }}
+    <details>
+        <summary><b>Previous Versions</b></summary>
+        {{ range $index, $release := . }}
+            {{ if not (eq $index 0) }}
+            <h4>{{ $release.version }}</h4>
+            <ul>
+                {{ range $release.changes}}
+                <li>{{ . }}</li>
+                {{ end }}
+            </ul>
+            {{ end }}
+        {{ end }}
+    </details>
+    {{ end }}
+    {{ end }}
+    {{ end }}
+{{ end }}

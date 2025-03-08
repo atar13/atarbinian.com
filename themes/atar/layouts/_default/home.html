@@ -1,0 +1,18 @@
+{{ define "main" }}
+  <!-- Homepage text -->
+  <div class="intro"> 
+      <img class="profile" src="{{ .Params.profile }}"></img>
+      <div class="bio">
+          {{ .Content }}
+      </div>
+  </div>
+  <!-- TODO: ADD PROJECTS BACK -->
+  <!-- <h1> -->
+  <!--     <a href="/projects">projects</a> -->
+  <!-- </h1> -->
+  <!-- Preview of all site's posts -->
+  <h1>latest posts</h1>
+  {{ range first 2 (where .Site.RegularPages "Section" "blog") }}
+    {{ partial "post-preview.html" . }}
+  {{ end }}
+{{ end }}

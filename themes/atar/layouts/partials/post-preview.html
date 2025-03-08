@@ -1,0 +1,10 @@
+<div class="post-preview">
+    <a href="{{ .RelPermalink }}">
+        <h2 class="post-title" style="display: inline-block;">{{ .LinkTitle }}</h2>
+        <p style="display: inline-block;">•</p>
+        {{ $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" }}
+        {{ $dateHuman := .Date | time.Format ":date_long" }}
+        <time style="display: inline-block; color: var(--secondary-text-color);" datetime="{{ $dateMachine }}">{{ $dateHuman }}</time>
+    </a>
+    {{ .Summary }}
+</div>

@@ -1,0 +1,97 @@
+{{ $images := .images }}
+
+<div class="scroll-container">
+    <div class="carousel-primary">
+        {{range $i, $img := .images}}
+          <img src="{{ $img }}"></img>
+        {{ end }}
+    </div>
+    <div class="carousel-primary carousel-secondary">
+        {{range $i, $img := .images}}
+          <img src="{{ $img }}"></img>
+        {{ end }}
+    </div>
+</div>
+
+<!-- <div class="carousel"> -->
+<!--   <div class="carousel-inner"> -->
+<!--     {{range $i, $img := .images}} -->
+<!--       <div class="carousel-item {{if eq $i 0}}active{{end}}"> -->
+<!--           <img src="{{$img}}" alt="Slide {{index $img}}"></img> -->
+<!--       </div> -->
+<!--     {{ end }} -->
+<!--   </div> -->
+<!--   <!-- <a href="#" class="prev btn">Previous</a> --> -->
+<!--   <!-- <a href="#" class="next btn">Next</a> --> -->
+<!--   <button class="prev" onclick="switchSlides(-1)">❮ Prev</button> -->
+<!--   <button class="next" onclick="switchSlides(1)">Next ❯</button> -->
+<!-- </div> -->
+<!---->
+<!-- <script async> -->
+<!-- function mod(n, m) { -->
+<!--   return ((n % m) + m) % m; -->
+<!-- } -->
+<!---->
+<!-- let slideIndex = 0; -->
+<!-- switchSlides(0); -->
+<!---->
+<!-- function switchSlides(diff) { -->
+<!--   console.log("slideIdex is " + slideIndex); -->
+<!--   let i; -->
+<!--   let slides = document.getElementsByClassName("carousel-item"); -->
+<!---->
+<!--   for (i = 0; i < slides.length; i++) { -->
+<!--     slides[i].style.opacity = 0; -->
+<!--     slides[i].style.visibility = "hidden"; -->
+<!--   } -->
+<!---->
+<!--   slideIndex = mod(slideIndex + diff, slides.length); -->
+<!---->
+<!--   slides[slideIndex].style.opacity = 1; -->
+<!--   slides[slideIndex].style.visibility = "visible"; -->
+<!-- } -->
+<!---->
+<!-- // TODO make this stop on hover over -->
+<!-- // setTimeout(switchSlides, 3000, 1); // Change the interval time as needed -->
+<!-- </script> -->
+
+<!-- <div class="slideshow"> -->
+<!--     {{- range .images }} -->
+<!--         <div class="slide"> -->
+<!--             <img src="{{ . }}" alt=""> -->
+<!--         </div> -->
+<!--     {{ end }} -->
+<!--     <button class="prev" onclick="plusSlides(-1)">❮ Prev</button> -->
+<!--     <button class="next" onclick="plusSlides(1)">Next ❯</button> -->
+<!-- </div> -->
+<!--    -->
+<!-- <script> -->
+<!--   let slideIndex = 1; -->
+<!--   showSlides(slideIndex); -->
+<!--    -->
+<!--   function plusSlides(n) { -->
+<!--     console.log('clicking') -->
+<!--     showSlides(slideIndex += n); -->
+<!--   } -->
+<!--    -->
+<!--   function currentSlide(n) { -->
+<!--     showSlides(slideIndex = n); -->
+<!--   } -->
+<!--    -->
+<!--   function showSlides(n) { -->
+<!--     let i; -->
+<!--     let slides = document.getElementsByClassName("slide"); -->
+<!--     // let dots = document.getElementsByClassName("dot"); -->
+<!--     if (n > slides.length) {slideIndex = 1} -->
+<!--     if (n < 1) {slideIndex = slides.length} -->
+<!--     for (i = 0; i < slides.length; i++) { -->
+<!--       slides[i].style.display = "none"; -->
+<!--     } -->
+<!--     // for (i = 0; i < dots.length; i++) { -->
+<!--     //   dots[i].className = dots[i].class.replace(" active", ""); -->
+<!--     // } -->
+<!--     console.log("showing idx " + slideIndex) -->
+<!--     slides[slideIndex-1].style.display = "block"; -->
+<!--     // dots[slideIndex-1].className += " active"; -->
+<!--   } -->
+<!--   </script> -->

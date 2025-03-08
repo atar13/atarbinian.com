@@ -1,0 +1,32 @@
+{{ define "main" }}
+  <h1>{{ .Title }}</h1>
+  {{ .Content }}
+  <h1>Experience</h1>
+  {{ range (where .Pages ".Params.layout" "experience") }}
+    <div class="post-preview">
+      <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
+      {{ .Summary }}
+    </div>
+  {{ end }}
+  <!-- <h1>Projects</h1> -->
+  <!-- {{ range (where .Pages ".Params.layout" "project") }} -->
+  <!--   <div class="post-preview"> -->
+  <!--     <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2> -->
+  <!--     {{ .Summary }} -->
+  <!--   </div> -->
+  <!-- {{ end }} -->
+  <h1>Publications</h1>
+  {{ range (where .Pages ".Params.layout" "paper") }}
+    <div class="post-preview">
+      <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
+      {{ .Summary }}
+    </div>
+  {{ end }}
+  <h1>Talks</h1>
+  {{ range (where .Pages ".Params.layout" "talk") }}
+    <div class="post-preview">
+      <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
+      {{ .Summary }}
+    </div>
+  {{ end }}
+{{ end }}

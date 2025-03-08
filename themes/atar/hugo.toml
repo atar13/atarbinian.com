@@ -1,0 +1,28 @@
+baseURL = 'https://example.org/'
+languageCode = 'en-US'
+title = 'atar theme'
+
+# [[menus.main]]
+# name = 'Projects'
+# pageRef = '/projects'
+# weight = 20
+
+# [[menus.main]]
+# name = 'CV'
+# pageRef = '/cv'
+# weight = 30
+
+[[menus.main]]
+name = 'Blog'
+pageRef = '/blog'
+weight = 40
+
+# [[menus.main]]
+# name = 'Repo'
+# pageRef = '/repo'
+# weight = 50
+
+[module]
+  [module.hugoVersion]
+    extended = false
+    min = "0.116.0"

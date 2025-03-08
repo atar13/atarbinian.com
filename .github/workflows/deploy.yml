@@ -1,0 +1,26 @@
+name: "Deply site"
+on:
+  push:
+    branches:
+      - main
+permissions:
+  contents: write
+
+env:
+  BUILD_CMD: "hugo build"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: cachix/install-nix-action@v27
+      with:
+        github_access_token: ${{ secrets.GITHUB_TOKEN }}
+    - run: nix flake check
+    - name: Build
+      run: nix develop --command $BUILD_CMD
+    - name: Deploy 🚀
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        folder: build

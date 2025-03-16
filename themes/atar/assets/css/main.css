@@ -354,16 +354,17 @@ nav > ul > li {
 }
 
 .intro {
-    display: flex;
-    flex-direction: row;
+    /* display: flex; */
+    /* flex-directrightion: row; */
 }
 
 .profile {
     margin: 1rem;
     max-width: 20%;
-    border-radius: 1rem;
+    border-radius: 50%;
     object-fit: contain;
-    margin-bottom: 60%;
+    float: right; 
+    /* margin-bottom: 60%; */
     /* display: block; */
     /* width: auto; */
     /* height: auto; */
@@ -375,11 +376,11 @@ nav > ul > li {
 
 @media (max-width: 700px) {
     .profile {
-        max-width: 10rem;
+        max-width: 8rem;
     }
 
     .intro { 
-      flex-direction: column; 
+      /* flex-direction: column;  */
     }
 
     #navbar {

@@ -199,12 +199,20 @@ nav > ul > li {
 
 #footer {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+#footer-links {
+  display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
 
-#footer  > * {
+#footer-links  > * {
   padding: 0 1rem;
 }
 
@@ -253,17 +261,8 @@ nav > ul > li {
 
 
 @media only screen and (max-width: 600px) {
-  header {
-
-  }
-
-  footer {
+  #footer-links {
     flex-direction: column;
-    align-items: baseline;
-  }
-
-  footer > * {
-    padding: 0;
   }
 }
 

@@ -2,17 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Blog on Anthony Tarbinian</title>
-    <link>https://example.org/blog/</link>
+    <link>https://atarbinian.com/blog/</link>
     <description>Recent content in Blog on Anthony Tarbinian</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 07 Mar 2025 09:00:00 -0700</lastBuildDate>
-    <atom:link href="https://example.org/blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 28 Jun 2026 22:00:00 -0700</lastBuildDate>
+    <atom:link href="https://atarbinian.com/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Shared Libraries for an Embedded Operating System</title>
+      <link>https://atarbinian.com/blog/shared-libraries-for-embedded-operating-systems/</link>
+      <pubDate>Sun, 28 Jun 2026 22:00:00 -0700</pubDate>
+      <guid>https://atarbinian.com/blog/shared-libraries-for-embedded-operating-systems/</guid>
+      <description>&lt;p&gt;This post is a summary of my masters thesis project. The full thesis can be found &lt;a href=&#34;https://atarbinian.com/ms-thesis/&#34;&gt;here&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Virtually all software use libraries. With so much existing code out there, why would we implement everything from scratch?&lt;/p&gt;&#xA;&lt;p&gt;On traditional computing platforms (which I&amp;rsquo;m defining as desktop and server), library code can be shared between multiple processes. This means that only one copy of the library code needs to live on a filesystem or loaded into memory.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Welcome!</title>
-      <link>https://example.org/blog/post-1/</link>
+      <link>https://atarbinian.com/blog/post-1/</link>
       <pubDate>Fri, 07 Mar 2025 09:00:00 -0700</pubDate>
-      <guid>https://example.org/blog/post-1/</guid>
+      <guid>https://atarbinian.com/blog/post-1/</guid>
       <description>&lt;p&gt;This is the first post of (hopefully) many on my blog. Time will tell if this ends up being the only post &amp;hellip;&lt;/p&gt;&#xA;&lt;p&gt;I don&amp;rsquo;t have a well-defined plan for this blog besides for a few ideas that have been floating in my head for the past year or so. I plan to cover:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;technologies I&amp;rsquo;m interested in&lt;/li&gt;&#xA;&lt;li&gt;how-to guides&lt;/li&gt;&#xA;&lt;li&gt;right to repair&lt;/li&gt;&#xA;&lt;li&gt;privacy and open source&lt;/li&gt;&#xA;&lt;li&gt;urban planning&lt;/li&gt;&#xA;&lt;li&gt;anything else that comes to mind&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;If any of that sounds interesting, add this feed to your favorite RSS reader and stay tuned!&lt;/p&gt;</description>
     </item>
   </channel>

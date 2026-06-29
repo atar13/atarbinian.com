@@ -2,73 +2,80 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Home on Anthony Tarbinian</title>
-    <link>https://example.org/</link>
+    <link>https://atarbinian.com/</link>
     <description>Recent content in Home on Anthony Tarbinian</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 07 Mar 2025 09:00:00 -0700</lastBuildDate>
-    <atom:link href="https://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 28 Jun 2026 22:00:00 -0700</lastBuildDate>
+    <atom:link href="https://atarbinian.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Shared Libraries for an Embedded Operating System</title>
+      <link>https://atarbinian.com/blog/shared-libraries-for-embedded-operating-systems/</link>
+      <pubDate>Sun, 28 Jun 2026 22:00:00 -0700</pubDate>
+      <guid>https://atarbinian.com/blog/shared-libraries-for-embedded-operating-systems/</guid>
+      <description>&lt;p&gt;This post is a summary of my masters thesis project. The full thesis can be found &lt;a href=&#34;https://atarbinian.com/ms-thesis/&#34;&gt;here&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Virtually all software use libraries. With so much existing code out there, why would we implement everything from scratch?&lt;/p&gt;&#xA;&lt;p&gt;On traditional computing platforms (which I&amp;rsquo;m defining as desktop and server), library code can be shared between multiple processes. This means that only one copy of the library code needs to live on a filesystem or loaded into memory.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Welcome!</title>
-      <link>https://example.org/blog/post-1/</link>
+      <link>https://atarbinian.com/blog/post-1/</link>
       <pubDate>Fri, 07 Mar 2025 09:00:00 -0700</pubDate>
-      <guid>https://example.org/blog/post-1/</guid>
+      <guid>https://atarbinian.com/blog/post-1/</guid>
       <description>&lt;p&gt;This is the first post of (hopefully) many on my blog. Time will tell if this ends up being the only post &amp;hellip;&lt;/p&gt;&#xA;&lt;p&gt;I don&amp;rsquo;t have a well-defined plan for this blog besides for a few ideas that have been floating in my head for the past year or so. I plan to cover:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;technologies I&amp;rsquo;m interested in&lt;/li&gt;&#xA;&lt;li&gt;how-to guides&lt;/li&gt;&#xA;&lt;li&gt;right to repair&lt;/li&gt;&#xA;&lt;li&gt;privacy and open source&lt;/li&gt;&#xA;&lt;li&gt;urban planning&lt;/li&gt;&#xA;&lt;li&gt;anything else that comes to mind&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;If any of that sounds interesting, add this feed to your favorite RSS reader and stay tuned!&lt;/p&gt;</description>
     </item>
     <item>
       <title>Company Name Here</title>
-      <link>https://example.org/cv/experience/company/</link>
+      <link>https://atarbinian.com/cv/experience/company/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://example.org/cv/experience/company/</guid>
+      <guid>https://atarbinian.com/cv/experience/company/</guid>
       <description>&lt;p&gt;Write about what you did at this company&lt;/p&gt;</description>
     </item>
     <item>
       <title>Houdini</title>
-      <link>https://example.org/repo/houdini/</link>
+      <link>https://atarbinian.com/repo/houdini/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://example.org/repo/houdini/</guid>
+      <guid>https://atarbinian.com/repo/houdini/</guid>
       <description>iOS jailbreak tweak to hide lockscreen elements</description>
     </item>
     <item>
       <title>Paper Name Here</title>
-      <link>https://example.org/cv/papers/paper/</link>
+      <link>https://atarbinian.com/cv/papers/paper/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://example.org/cv/papers/paper/</guid>
+      <guid>https://atarbinian.com/cv/papers/paper/</guid>
       <description>&lt;p&gt;Write about what you did for this paper&lt;/p&gt;</description>
     </item>
     <item>
       <title>Project Name Here</title>
-      <link>https://example.org/cv/projects/project/</link>
+      <link>https://atarbinian.com/cv/projects/project/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://example.org/cv/projects/project/</guid>
+      <guid>https://atarbinian.com/cv/projects/project/</guid>
       <description>&lt;p&gt;Write about what you did for this project&lt;/p&gt;</description>
     </item>
     <item>
       <title>Talk Name Here</title>
-      <link>https://example.org/cv/talks/talk/</link>
+      <link>https://atarbinian.com/cv/talks/talk/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://example.org/cv/talks/talk/</guid>
+      <guid>https://atarbinian.com/cv/talks/talk/</guid>
       <description>&lt;p&gt;Write about what you did for this talk&lt;/p&gt;</description>
     </item>
     <item>
       <title>Triton UAS</title>
-      <link>https://example.org/projects/tuas/</link>
+      <link>https://atarbinian.com/projects/tuas/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://example.org/projects/tuas/</guid>
+      <guid>https://atarbinian.com/projects/tuas/</guid>
       <description></description>
     </item>
     <item>
       <title>Vaon</title>
-      <link>https://example.org/repo/vaon/</link>
+      <link>https://atarbinian.com/repo/vaon/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://example.org/repo/vaon/</guid>
+      <guid>https://atarbinian.com/repo/vaon/</guid>
       <description>iOS jailbreak tweak that adds Bluetooth battery information to the app switcher</description>
     </item>
     <item>
       <title>Wrath of Zeus</title>
-      <link>https://example.org/cv/projects/wrath_of_zeus/</link>
+      <link>https://atarbinian.com/cv/projects/wrath_of_zeus/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://example.org/cv/projects/wrath_of_zeus/</guid>
+      <guid>https://atarbinian.com/cv/projects/wrath_of_zeus/</guid>
       <description>&lt;p&gt;Write about what you did for this project&lt;/p&gt;</description>
     </item>
   </channel>

@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Shared Libraries for an Embedded Operating System | Anthony Tarbinian</title>
+
+      <link rel="stylesheet" href="/css/main.min.24b0e30136f1c353abe4a02ce50ca02bcc63de39ff20b52a8cce121fd69903fd.css" integrity="sha256-JLDjATbxw1Or5KAs5QygK8xj3jn/ILUqjM4SH9aZA/0=" crossorigin="anonymous">
+
+
+      <script src="/js/main.60b12c2de47982d47bfbc47d7c5da339078c91e0a552884f5ce6ad26d86a7808.js" integrity="sha256-YLEsLeR5gtR7&#43;8R9fF2jOQeMkeClUohPXOatJthqeAg=" crossorigin="anonymous"></script>
+
+
+<script src="https://cdn.counter.dev/script.js" data-id="38d6c994-b666-4fa7-becc-6fd546b68fd4" data-utcoffset="-8"></script>
+
+</head>
+<body>
+  <header>
+    <div id="navbar">
+<h1><a href="/">Anthony Tarbinian</a></h1>
+
+  <nav>
+    <ul>
+    <li class="menu-item">
+      <a aria-current="true" class="ancestor" href="/blog/">Blog</a>
+    </li>
+  <li class="menu-item">
+    
+    <div onclick="toggleLight()" style="display: flex; justify-content: center; align-items: center;">
+      <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
+<svg class="moon-icon" width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="SVGRepo_bgCarrier" stroke-width="0"/>
+<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+<g id="SVGRepo_iconCarrier"> <path d="M3.32031 11.6835C3.32031 16.6541 7.34975 20.6835 12.3203 20.6835C16.1075 20.6835 19.3483 18.3443 20.6768 15.032C19.6402 15.4486 18.5059 15.6834 17.3203 15.6834C12.3497 15.6834 8.32031 11.654 8.32031 6.68342C8.32031 5.50338 8.55165 4.36259 8.96453 3.32996C5.65605 4.66028 3.32031 7.89912 3.32031 11.6835Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/> </g>
+</svg>
+      <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg class="sun-icon" width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M15 12C15 13.6569 13.6569 15 12 15C10.3432 15 9.00004 13.6569 9.00004 12C9.00004 10.3432 10.3432 9.00004 12 9.00004C13.6569 9.00004 15 10.3432 15 12Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M7.64338 5.18899L7.56701 6.10541C7.52707 6.58478 7.50709 6.82447 7.40373 7.01167C7.31261 7.1767 7.1767 7.31261 7.01167 7.40373C6.82447 7.50709 6.58477 7.52707 6.10541 7.56701L5.18898 7.64338C4.16259 7.72892 3.6494 7.77168 3.39642 8.00615C3.17627 8.21018 3.05941 8.50232 3.07812 8.8019C3.09961 9.14615 3.44174 9.53105 4.126 10.3008L4.69153 10.9371C5.02586 11.3132 5.19302 11.5012 5.2565 11.7135C5.31243 11.9004 5.31243 12.0997 5.2565 12.2866C5.19302 12.4988 5.02586 12.6869 4.69153 13.063L4.126 13.6992C3.44174 14.469 3.09961 14.8539 3.07812 15.1982C3.05941 15.4978 3.17627 15.7899 3.39642 15.9939C3.6494 16.2284 4.16259 16.2712 5.18899 16.3567L6.10541 16.4331C6.58478 16.473 6.82446 16.493 7.01167 16.5964C7.1767 16.6875 7.31261 16.8234 7.40373 16.9884C7.50709 17.1756 7.52707 17.4153 7.56701 17.8947L7.64338 18.8111C7.72892 19.8375 7.77168 20.3507 8.00615 20.6037C8.21018 20.8238 8.50232 20.9407 8.8019 20.922C9.14615 20.9005 9.53105 20.5583 10.3008 19.8741L10.9371 19.3085C11.3132 18.9742 11.5012 18.8071 11.7135 18.7436C11.9004 18.6876 12.0997 18.6876 12.2866 18.7436C12.4988 18.8071 12.6869 18.9742 13.063 19.3085L13.6992 19.8741C14.469 20.5583 14.8539 20.9005 15.1982 20.922C15.4978 20.9407 15.7899 20.8238 15.9939 20.6037C16.2284 20.3507 16.2712 19.8375 16.3567 18.8111L16.4331 17.8947C16.473 17.4153 16.493 17.1756 16.5964 16.9884C16.6875 16.8234 16.8234 16.6875 16.9884 16.5964C17.1756 16.493 17.4153 16.473 17.8947 16.4331L18.8111 16.3567C19.8375 16.2712 20.3507 16.2284 20.6037 15.9939C20.8238 15.7899 20.9407 15.4978 20.922 15.1982C20.9005 14.8539 20.5583 14.469 19.8741 13.6992L19.3085 13.063C18.9742 12.6869 18.8071 12.4988 18.7436 12.2866C18.6876 12.0997 18.6876 11.9004 18.7436 11.7135C18.8071 11.5012 18.9742 11.3132 19.3085 10.9371L19.8741 10.3008C20.5583 9.53105 20.9005 9.14615 20.922 8.8019C20.9407 8.50232 20.8238 8.21018 20.6037 8.00615C20.3507 7.77168 19.8375 7.72892 18.8111 7.64338L17.8947 7.56701C17.4153 7.52707 17.1756 7.50709 16.9884 7.40373C16.8234 7.31261 16.6875 7.1767 16.5964 7.01167C16.493 6.82446 16.473 6.58478 16.4331 6.10541L16.3567 5.18898C16.2712 4.16259 16.2284 3.6494 15.9939 3.39642C15.7899 3.17627 15.4978 3.05941 15.1982 3.07812C14.8539 3.09961 14.469 3.44174 13.6992 4.126L13.063 4.69153C12.6869 5.02586 12.4988 5.19302 12.2866 5.2565C12.0997 5.31243 11.9004 5.31243 11.7135 5.2565C11.5012 5.19302 11.3132 5.02586 10.9371 4.69153L10.3008 4.126C9.53105 3.44174 9.14615 3.09961 8.8019 3.07812C8.50232 3.05941 8.21018 3.17627 8.00615 3.39642C7.77168 3.6494 7.72892 4.16259 7.64338 5.18899Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+    </div>
+  </li>
+    </ul>
+  </nav>
+
+</div>
+
+  </header>
+  <main>
+    
+  <div class="post">
+    <h1>Shared Libraries for an Embedded Operating System</h1>
+
+    
+    
+    <time datetime="2026-06-28T22:00:00-07:00">June 28, 2026</time>
+    
+
+
+    <p>This post is a summary of my masters thesis project. The full thesis can be found <a href="https://atarbinian.com/ms-thesis/">here</a></p>
+<p>Virtually all software use libraries. With so much existing code out there, why would we implement everything from scratch?</p>
+<p>On traditional computing platforms (which I&rsquo;m defining as desktop and server), library code can be shared between multiple processes. This means that only one copy of the library code needs to live on a filesystem or loaded into memory.</p>
+<p>Imagine a library such as a system’s <a href="https://en.wikipedia.org/wiki/C_standard_library">C standard library (<code>libc</code>)</a>. There might be hundreds of processes all calling functions like <code>printf</code> or <code>malloc</code>. <strong>Why keep around hundreds of copies of the same code?</strong></p>
+<p>Due to the nature how shared libraries are decoupled from their application binary, it makes it easy to update software. If an update is needed in library code, it&rsquo;s much easier to update a single shared library rather than to ask application developers to re-compile and re-link their code with the updated library.</p>
+<h2 id="embedded-operating-systems">Embedded Operating Systems?</h2>
+<p>Just to clear things up, when I refer to embedded devices, I mean <strong>microcontroller-class</strong> devices. Think of your <a href="https://www.espressif.com/en/products/socs/esp32">ESP32</a>s, <a href="https://www.raspberrypi.com/">Raspberry Pi</a>s, or <a href="https://www.arduino.cc/">Arduino</a>s. Not something like a smartphone or a <a href="https://developer.nvidia.com/embedded/jetson-modules">NVIDIA Jetson</a>. These embedded devices might live inside an e-scooter or a lightbulb in a smart home.</p>
+<p>Historically, embedded firmware has been simple enough to require a single unit of execution. These systems are usually only responsible for doing one simple task such as controlling a physical mechanism or collecting sensor data.</p>
+<p>This single application is often a loop that follows the pattern of reading some input from hardware, processing that data, then responding to that input (i.e. modifying hardware or storing data) before repeating the cycle again. (Instead of polling for inputs, you could run respond to <a href="https://en.wikipedia.org/wiki/Interrupt">interrupt</a> handlers, but the same single task paradigm applies)</p>
+<!-- ```c { lineNos=inline } -->
+<!-- while (1) { -->
+<!--     readInputs(); -->
+<!--     processInputs(); -->
+<!--     respond(); -->
+<!-- } -->
+<!-- ``` -->
+<p>As hardware become more capable and cheaper, embedded systems are taking on more complexities and are requiring multiprogramming capabilities. Some common embedded operating systems include <a href="https://www.zephyrproject.org/">Zephyr</a>, <a href="https://www.freertos.org/">FreeRTOS</a>, and <a href="https://www.riot-os.org/">RIOT</a>.</p>
+<h2 id="why-not-share-libraries">Why not share libraries?</h2>
+<p>Most embedded OSes don&rsquo;t need to. Usually, all library and application code is statically compiled and linked into a single binary. The libraries are already “shared” in the sense that there’s a single copy which is callable from all application code.</p>
+<p>However, the Tock operating system differs from its counterparts in its ability to execute multiple, isolated compilation units. Each application is compiled separately, meaning that each library must be compiled statically into each application. This execution model presents an opportunity for applications to share common library code and save limited flash storage.</p>
+<figure class="centered figure-bg figure-max-width-500px"><img src="/blog/shared-libraries/embedded-oses-libraries.svg"
+    alt="Comparison of how different types of embedded operating systems link together applications with libraries. On the left, traditional embedded operating systems (such as Zephyr or FreeRTOS) statically link their library code with all applications. On the right, Tock OS has separate compilation units for each application so each library is linked separately with each application."><figcaption>
+      <p>On the left, traditional embedded operating systems (such as Zephyr or FreeRTOS) statically link their library code with all applications. On the right, Tock OS has separate compilation units for each application so each library is linked separately with each application.</p>
+    </figcaption>
+</figure>
+
+<h2 id="shared-libraries-on-linux">Shared Libraries on Linux</h2>
+<p>Before we dive deep into how shared libraries would work for embedded operating systems, let&rsquo;s examine how they work in a more established setting: Linux.</p>
+<p>On Linux, there are extra mechanisms at runtime to support shared libraries. One of which is the dynamic linker.</p>
+<h3 id="dynamic-linkingloading">Dynamic Linking/Loading</h3>
+<p>Forget shared libraries for a second. Let&rsquo;s take a step back and thinking about how library function calls work with statically linked libraries.</p>
+<p>With static linking, all the library code a program needs is folded into the final executable at <strong>link-time</strong>. This means there is nothing to do at runtime; the process can keep executing and freely call into libraries by performing a jump to the known location of program memory.</p>
+<figure class="code-figure"><div class="highlight" caption="C code which calls a statically linked library function: `lib_func`" verbatim="false"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#ff7b72">int</span> <span style="color:#d2a8ff;font-weight:bold">main</span>(<span style="color:#ff7b72">void</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#d2a8ff;font-weight:bold">lib_func</span>();
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+      <figcaption class="code-caption"><span>C code which calls a statically linked library function: <code>lib_func</code></span> </figcaption>
+</figure>
+<figure class="code-figure"><div class="highlight" caption="This is the equivalent ARM assembly which "jumps" to the code for the function `lib_func`. After the jump, the processor executes the code in `lib_func`. This is equivalent to setting the [program counter](https://en.wikipedia.org/wiki/Program_counter) register to the location of the `lib_func` code in memory (which is `0x0004005C`) in this case. In the case of statically linked libraries, the linker knows exactly where `lib_func` is located since it's part of the same executable file as the rest of the application code. So, the `jmp lib_func` assembly is really syntactic sugar for `jmp 0x0004005C` (which is commented above)."><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">; jmp 0x0004005C
+</span></span></span><span style="display:flex;"><span><span style="color:#d2a8ff;font-weight:bold">jmp</span> <span style="color:#79c0ff;font-weight:bold">lib_func</span> </span></span></code></pre></div>
+      <figcaption class="code-caption"><span>This is the equivalent ARM assembly which &ldquo;jumps&rdquo; to the code for the function <code>lib_func</code>. After the jump, the processor executes the code in <code>lib_func</code>. This is equivalent to setting the <a href="https://en.wikipedia.org/wiki/Program_counter">program counter</a> register to the location of the <code>lib_func</code> code in memory (which is <code>0x0004005C</code>) in this case. In the case of statically linked libraries, the linker knows exactly where <code>lib_func</code> is located since it&rsquo;s part of the same executable file as the rest of the application code. So, the <code>jmp lib_func</code> assembly is really syntactic sugar for <code>jmp 0x0004005C</code> (which is commented above).</span> </figcaption>
+</figure>
+<p>With shared libraries, this assumption breaks down. At link time, we don&rsquo;t know where the shared library will exist in the process&rsquo; address space. The location of the shared library code might depend on how many other libraries are loaded, the order which they are loaded, etc.</p>
+<p>Instead, we need an extra mechanism at <strong>runtime</strong> to tell the program where the library code is loaded in memory.</p>
+<p>The dynamic linker is a program which is responsible for setting up a process for execution. It does so by resolving references to shared library symbols and setting up the process&rsquo;s address space.</p>
+<p>The dynamic linker runs before the code in your process ever starts. On Linux, if the kernel detects if the executable file is of the <a href="https://refspecs.linuxfoundation.org/elf/elf.pdf">ELF</a> format, the kernel reads the <code>PT_INTERP</code> field of the ELF program header to determine which dynamic linker to invoke.</p>
+<p>You can use the <a href="https://www.man7.org/linux/man-pages/man1/readelf.1.html"><code>readelf</code></a> command line tool to print out the <code>PT_INTERP</code> field of an ELF program header. Get used to <code>readelf</code> as it&rsquo;s crucial for digging into ELF files (<a href="https://naveenspace7.github.io/2023/09/23/ReadElf.html">here&rsquo;s a useful guide</a>).</p>
+<figure class="code-figure"><div class="highlight" caption="Print out a human readable version of the program header of the `ls` binary. Feel free to replace `/usr/bin/ls` with the path to any ELF binary on your system."><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>readelf --program-headers /usr/bin/ls</span></span></code></pre></div>
+      <figcaption class="code-caption"><span>Print out a human readable version of the program header of the <code>ls</code> binary. Feel free to replace <code>/usr/bin/ls</code> with the path to any ELF binary on your system.</span> </figcaption>
+</figure>
+<figure class="code-figure">
+      <div class='no-highlight'>
+      <pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;" style="padding: 1rem; border-radius: 6px; overflow-x: auto;"><code class="language-text" data-lang="text">INTERP         0x0000000000000318 0x0000000000000318 0x0000000000000318
+               0x000000000000001c 0x000000000000001c  R      0x1
+[Requesting program interpreter: /lib64/ld-linux-x86-64.so.2]</code></pre>
+      <div>
+      <figcaption class="code-caption"><span>Output of <code>readelf --program-headers /usr/bin/ls</code> which indicates that the requested &ldquo;program interpreter&rdquo; or dynamic linker is <code>/lib64/ld-linux-x86-64.so.2</code></span> </figcaption>
+</figure>
+<p>On modern Linux, the dynamic linker for ELF binaries is <a href="https://www.man7.org/linux/man-pages/man8/ld.so.8.html"><code>ld-linux.so</code></a>. You can find it on your system in an architecture-specific location (on x86 systems this will be at
+<code>/lib64/ld-linux-x86-64.so.2</code>).</p>
+<p>The dynamic linker then identifies what shared libraries your program depends on. It does this by reading the <code>DT_NEEDED</code> entries of the &ldquo;dynamic&rdquo; section of the ELF binary. We can use <code>readelf</code> to inspect the shared library dependencies of common programs.</p>
+<figure class="code-figure"><div class="highlight" caption="Printing out which shared libraries `ls` requires. This `readelf` command prints out the dynamic section of the ELF binary which contains information needed for dynamic linking."><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>readelf --dynamic /usr/bin/ls | grep NEEDED</span></span></code></pre></div>
+      <figcaption class="code-caption"><span>Printing out which shared libraries <code>ls</code> requires. This <code>readelf</code> command prints out the dynamic section of the ELF binary which contains information needed for dynamic linking.</span> </figcaption>
+</figure>
+<figure class="code-figure"><div class="highlight" caption="`ls` relies on `libc.so.6` and `libselinux.so.1`. This is on an Ubuntu 24.04 system, your system may differ. [The number after the file extension (`.so`) is a version number](https://superuser.com/questions/299009/what-do-the-number-suffixes-in-linux-dynamic-libraries-mean) which allows different versions of a given library to co-exist."><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span> 0x0000000000000001 <span style="color:#ff7b72;font-weight:bold">(</span>NEEDED<span style="color:#ff7b72;font-weight:bold">)</span>             Shared library: <span style="color:#ff7b72;font-weight:bold">[</span>libselinux.so.1<span style="color:#ff7b72;font-weight:bold">]</span>
+</span></span><span style="display:flex;"><span> 0x0000000000000001 <span style="color:#ff7b72;font-weight:bold">(</span>NEEDED<span style="color:#ff7b72;font-weight:bold">)</span>             Shared library: <span style="color:#ff7b72;font-weight:bold">[</span>libc.so.6<span style="color:#ff7b72;font-weight:bold">]</span></span></span></code></pre></div>
+      <figcaption class="code-caption"><span><code>ls</code> relies on <code>libc.so.6</code> and <code>libselinux.so.1</code>. This is on an Ubuntu 24.04 system, your system may differ. <a href="https://superuser.com/questions/299009/what-do-the-number-suffixes-in-linux-dynamic-libraries-mean">The number after the file extension (<code>.so</code>) is a version number</a> which allows different versions of a given library to co-exist.</span> </figcaption>
+</figure>
+<p><code>ls</code> only needed two shared libraries. Let&rsquo;s see which shared libraries something more complicated like <a href="https://neovim.io/">neovim</a> uses:</p>
+<figure class="code-figure"><div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>readelf --dynamic /usr/bin/nvim | grep NEEDED</span></span></code></pre></div>
+</figure>
+<figure class="code-figure">
+      <div class='no-highlight'>
+      <pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;" style="padding: 1rem; border-radius: 6px; overflow-x: auto;"><code class="language-text" data-lang="text"> 0x0000000000000001 (NEEDED)             Shared library: [liblua5.1-luv.so.1]
+ 0x0000000000000001 (NEEDED)             Shared library: [libtermkey.so.1]
+ 0x0000000000000001 (NEEDED)             Shared library: [libvterm.so.0]
+ 0x0000000000000001 (NEEDED)             Shared library: [libmsgpackc.so.2]
+ 0x0000000000000001 (NEEDED)             Shared library: [libtree-sitter.so.0]
+ 0x0000000000000001 (NEEDED)             Shared library: [libunibilium.so.4]
+ 0x0000000000000001 (NEEDED)             Shared library: [libluajit-5.1.so.2]
+ 0x0000000000000001 (NEEDED)             Shared library: [libm.so.6]
+ 0x0000000000000001 (NEEDED)             Shared library: [libuv.so.1]
+ 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]</code></pre>
+      <div>
+</figure>
+<p>Once the dynamic linker has the names of the libraries, it will attempt to find the shared library on the filesystem. It will look through directories such as <code>/lib/</code> or <code>/usr/lib</code> as well as user provided directories using the <a href="https://www.man7.org/linux/man-pages/man8/ld.so.8.html"><code>LD_LIBRARY_PATH</code></a> environment variable.</p>
+<p>Once the dynamic linker has found the shared library on the filesystem (usually a <code>.so</code> file), it maps it into a newly allocated location in the address space. With <a href="https://en.wikipedia.org/wiki/Address_space_layout_randomization">ASLR</a>, the location is randomized as a security defense.</p>
+<h3 id="load-time-relocation">Load-time relocation</h3>
+<p>Now, the dynamic linker needs to tell the application where the shared library is loaded so that it can resolve it&rsquo;s references to shared library symbols (i.e. shared library functions).</p>
+<p>One way this was historically done was with &ldquo;load-time relocations&rdquo;. <a href="https://eli.thegreenplace.net/2011/08/25/load-time-relocation-of-shared-libraries">Here&rsquo;s a phenomenal blob post on how it works</a>. The high level idea is that the original linker doesn&rsquo;t know where shared libraries will be loaded so it leaves notes (or relocation entries) for the dynamic linker to find later and fill in the gaps. The dynamic linker will then resolve the relocations and write the actual address to the application&rsquo;s executable file.</p>
+<p>Here are some problems with load-time relocation:</p>
+<ol>
+<li>Patching all relocation entries can be lengthy, as the dynamic linker needs to patch <strong>every</strong> variable reference.</li>
+<li>It&rsquo;s not a good security idea to allow writable text sections.</li>
+<li>Making text sections writable destroys the potential for shared library text sections to be shared since every process would have relocations applied at different addresses. :(</li>
+</ol>
+<h3 id="global-offset-table-got--position-independent-code-pic">Global Offset Table (GOT) &amp; Position Independent Code (PIC)</h3>
+<p>We just learned that load-time relocations are too costly at runtime, since the dynamic linker has to perform a relocation for every instruction that references a global variable. Instead, we can reduce the number of relocations needed with a bit of indirection. <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<p>Imagine that instead of looking up global variables by their actual address, our code would find the address of the global variables in a lookup table first. This way, the dynamic linker can update the entries of this lookup table with the actual address of each variable.</p>
+<p>We call this lookup table the <a href="https://en.wikipedia.org/wiki/Global_Offset_Table">Global Offset Table (GOT)</a>.</p>
+<p>Let&rsquo;s see how this addresses our concerns from earlier:</p>
+<ol>
+<li>Performance-wise, this is a huge improvement as opposed to modifying each memory reference in all instructions from the text section.</li>
+<li>Security-wise, we can keep the text section read-only since the GOT can live in writable memory.</li>
+<li>Most importantly, we don&rsquo;t need to modify any text sections and can re-use shared library text sections between processes.</li>
+</ol>
+<p>Thanks to the GOT, the compiler can emit <a href="https://en.wikipedia.org/wiki/Position-independent_code">position independent code (PIC)</a>. The general idea is to compile the code in a way that it can be be run no matter where in memory it&rsquo;s loaded. At the compiler level, this means that instructions cannot be emitted with references to absolute addresses.</p>
+<p>For shared libraries, this means that shared library code can reference its own global variables no matter where in memory the shared library was loaded.</p>
+<p>Take the following example. Here&rsquo;s some C code of a shared library function <code>foo</code> which writes to a global variable called <code>var</code>.</p>
+<figure class="code-figure"><div class="highlight" caption="Sample shared library function `foo`"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-text-size-adjust:none;"><code class="language-c" data-lang="c"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">1</span><span><span style="color:#ff7b72">int</span> var <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">2</span><span> 
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">3</span><span><span style="color:#ff7b72">void</span> <span style="color:#d2a8ff;font-weight:bold">foo</span>(<span style="color:#ff7b72">void</span>) {
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">4</span><span>  var <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">1</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">5</span><span>}</span></span></code></pre></div>
+      <figcaption class="code-caption"><span>Sample shared library function <code>foo</code></span> </figcaption>
+</figure>
+<p>The two examples below are two variations of the ARM assembly which would be produced by compiling the above C code. The first accesses the global variable directly while the second side goes through the GOT.</p>
+<div class="columns">
+    <figure class="code-figure">
+      <h4>Non-PIC access of global variable</h4><div class="highlight" title="Non-PIC access of global variable" caption="The address to the variable `var` is fetched from the text section. It loads the address of the variable and writes `1` to the variable in memory. Note that the address is loaded from the **text section** at a location relative to the [program counter](https://en.wikipedia.org/wiki/Program_counter) (I'll refer to this as PC-relative) (program counter is `pc` register in the assembly). So, in the case of load-time relocations, the dynamic linker would need to update the address in the text section to point to the actual address of where the variable `var` was."><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-text-size-adjust:none;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">1</span><span><span style="color:#79c0ff;font-weight:bold">foo:</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">2</span><span><span style="color:#8b949e;font-style:italic">; load address to var
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">3</span><span><span style="color:#d2a8ff;font-weight:bold">ldr</span> <span style="color:#79c0ff;font-weight:bold">r3</span>, [<span style="color:#79c0ff;font-weight:bold">pc</span>, <span style="color:#a5d6ff">4</span>] 
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">4</span><span><span style="color:#8b949e;font-style:italic">; write 1 to var
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">5</span><span><span style="color:#d2a8ff;font-weight:bold">movs</span> <span style="color:#79c0ff;font-weight:bold">r2</span>, <span style="color:#a5d6ff">1</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">6</span><span><span style="color:#d2a8ff;font-weight:bold">str</span> <span style="color:#79c0ff;font-weight:bold">r2</span>, [<span style="color:#79c0ff;font-weight:bold">r3</span>, <span style="color:#a5d6ff">0</span>] 
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">7</span><span><span style="color:#8b949e;font-style:italic">; return
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">8</span><span><span style="color:#d2a8ff;font-weight:bold">bx</span>  <span style="color:#79c0ff;font-weight:bold">lr</span></span></span></code></pre></div>
+      <figcaption class="code-caption"><span>The address to the variable <code>var</code> is fetched from the text section. It loads the address of the variable and writes <code>1</code> to the variable in memory. Note that the address is loaded from the <strong>text section</strong> at a location relative to the <a href="https://en.wikipedia.org/wiki/Program_counter">program counter</a> (I&rsquo;ll refer to this as PC-relative) (program counter is <code>pc</code> register in the assembly). So, in the case of load-time relocations, the dynamic linker would need to update the address in the text section to point to the actual address of where the variable <code>var</code> was.</span> </figcaption>
+</figure>
+<figure class="code-figure">
+      <h4>PIC access of global variable via GOT</h4><div class="highlight" title="PIC access of global variable via GOT" caption="The address to the variable `var` doesn't live in the text section like before, but instead in the GOT (which itself lives in the data section). So first, we need to access the GOT. This is a PC-relative access to a hard-coded value in the text section. Unlike the previous case, this address to the GOT in the text section doesn't need to be modified (allowing the text sections to be shared and left as read-only)."><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-text-size-adjust:none;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 1</span><span><span style="color:#79c0ff;font-weight:bold">foo:</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 2</span><span><span style="color:#8b949e;font-style:italic">; load PC-relative offset to GOT
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 3</span><span><span style="color:#d2a8ff;font-weight:bold">ldr</span> <span style="color:#79c0ff;font-weight:bold">r3</span>, [<span style="color:#79c0ff;font-weight:bold">pc</span>, <span style="color:#a5d6ff">12</span>]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 4</span><span><span style="color:#8b949e;font-style:italic">; calculate actual GOT address 
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 5</span><span><span style="color:#d2a8ff;font-weight:bold">add</span> <span style="color:#79c0ff;font-weight:bold">r3</span>, <span style="color:#79c0ff;font-weight:bold">pc</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 6</span><span><span style="color:#8b949e;font-style:italic">; load var&#39;s offset inside GOT
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 7</span><span><span style="color:#d2a8ff;font-weight:bold">ldr</span> <span style="color:#79c0ff;font-weight:bold">r2</span>, [<span style="color:#79c0ff;font-weight:bold">pc</span>, <span style="color:#a5d6ff">12</span>]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 8</span><span><span style="color:#8b949e;font-style:italic">; load location of var from GOT
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 9</span><span><span style="color:#d2a8ff;font-weight:bold">ldr</span> <span style="color:#79c0ff;font-weight:bold">r3</span>, [<span style="color:#79c0ff;font-weight:bold">r3</span>, <span style="color:#79c0ff;font-weight:bold">r2</span>]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">10</span><span><span style="color:#8b949e;font-style:italic">; write 1 to var
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">11</span><span><span style="color:#d2a8ff;font-weight:bold">movs</span> <span style="color:#79c0ff;font-weight:bold">r2</span>, <span style="color:#a5d6ff">1</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">12</span><span><span style="color:#d2a8ff;font-weight:bold">str</span> <span style="color:#79c0ff;font-weight:bold">r2</span>, [<span style="color:#79c0ff;font-weight:bold">r3</span>, <span style="color:#a5d6ff">0</span>]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">13</span><span><span style="color:#8b949e;font-style:italic">; return
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">14</span><span><span style="color:#d2a8ff;font-weight:bold">bx</span>  <span style="color:#79c0ff;font-weight:bold">lr</span></span></span></code></pre></div>
+      <figcaption class="code-caption"><span>The address to the variable <code>var</code> doesn&rsquo;t live in the text section like before, but instead in the GOT (which itself lives in the data section). So first, we need to access the GOT. This is a PC-relative access to a hard-coded value in the text section. Unlike the previous case, this address to the GOT in the text section doesn&rsquo;t need to be modified (allowing the text sections to be shared and left as read-only).</span> </figcaption>
+</figure>
+
+</div>
+
+<p>In the PIC assembly, you&rsquo;ll notice that the location of the GOT is hard-coded in the text section (see line 3: <code>ldr r3, [pc, 12]</code>). You might be thinking, how does the compiler know where the GOT will be located?&quot;</p>
+<p>On most systems, we can assume that the text section will be relative to the data section (remember that the GOT is part of the data section). So, if we know the data section is relative to text, we can hard-code the PC-relative offset to the GOT at compile-time.</p>
+<h3 id="procedure-linkage-table-plt">Procedure Linkage Table (PLT)</h3>
+<p>Function calls to shared libraries also need to be resolved at runtime. This is commonly achieved via a jump table or sometimes called Procedure Linkage Table (PLT) which resides in the executable text section of a program. Instead of calling the function directly, the application jumps into an entry of the PLT. The PLT contains executable code which takes care of jumping to the actual function. The PLT will refer to a second GOT which exclusively contains addresses for functions referred to by PLT entries (frequently called the <code>.plt.got</code> section).</p>
+<!-- One optimization made possible thanks to the PLT is lazy binding. With lazy binding, relocations for functions don’t have to be done at program load time. Instead, they can occur the first time a function is called. This optimization can save plenty of time since functions which never get called will never need relocation. On the first call, the PLT will invoke a resolver routine (usually a part of the dynamic linker) which will find the location of the target function symbol. Once the location of the function is found, the address is cached in the GOT. Then, on subsequent calls to the function, the PLT will simply use the cached value in the GOT to jump directly to the function in question. -->
+<h2 id="pic-on-tock">PIC on Tock</h2>
+<p>Now that we&rsquo;ve seen how position independent code works on Linux and how it&rsquo;s relevant for function calls to shared libraries, let&rsquo;s take a look at how existing concepts apply to <a href="https://tockos.org/">Tock</a>, an embedded operating system, and where things break down.</p>
+<h3 id="text-and-data-sections-are-not-relative">Text and Data sections are not relative</h3>
+<p>Right off the bat we have a problem. Remember how I said that we could take advantage of the fact that data and text sections will be relative to each other. This was useful since we could bake a PC-relative hard-coded offset to the GOT right into the text section at compile time. With embedded systems, this doesn&rsquo;t hold up since embedded systems typically execute instructions directly from flash storage. <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> As embedded systems have no virtual memory, this means that text section will be in a different part of the physical address space compared to where data sections are loaded in <a href="https://en.wikipedia.org/wiki/Random-access_memory">RAM</a>. So how do our instructions know where the GOT is located?</p>
+<div class="columns">
+    
+    <figure class="figure-bg"><img src="/blog/shared-libraries/relative.svg"
+        alt="Relative text and data sections"><figcaption>
+          <p>Relative text and data sections</p>
+        </figcaption>
+    </figure>
+
+    <figure class="figure-bg"><img src="/blog/shared-libraries/nonrelative.svg"
+        alt="Non-relative text and data sections such as when text is in flash memory and data is in RAM"><figcaption>
+          <p>Non-relative text and data sections such as when text is in flash memory and data is in RAM</p>
+        </figcaption>
+    </figure>
+
+
+</div>
+
+<p>Thankfully, Tock and other embedded platforms have already (mostly) solved this problem in the past.</p>
+<h3 id="pic-base-register">PIC Base Register</h3>
+<p>There is a <a href="https://gcc.gnu.org/">GCC</a> <a href="https://gcc.gnu.org/onlinedocs/gcc-4.3.2/gcc/ARM-Options.html">compiler flag (<code>-mpic-register=r9</code>)</a> which reserves a register to always store the address of the GOT. We&rsquo;ll refer to this as the <strong>PIC base register</strong>. This means that the compiler will not use the PIC base register for anything other than accessing the GOT. This means that compiler has one less register to work with for all other types of instructions.</p>
+<p>Here&rsquo;s our example of writing <code>1</code> to a global variable from before. This time, the left is using PC-relative accesses to the GOT and the right uses the PIC base register (<code>r9</code>).</p>
+<div class="columns">
+    <figure class="code-figure">
+      <h4>Accessing GOT via hard-coded PC relative offset</h4><div class="highlight" title="Accessing GOT via hard-coded PC relative offset" caption="Same PIC code from earlier which accesses a global variable via the GOT. Pay close attention to how the address of the GOT is loaded."><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-text-size-adjust:none;display:grid;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 1</span><span><span style="color:#79c0ff;font-weight:bold">foo:</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 2</span><span><span style="color:#8b949e;font-style:italic">; load PC-relative offset to GOT
+</span></span></span><span style="display:flex; background-color:#6e7681"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 3</span><span><span style="color:#d2a8ff;font-weight:bold">ldr</span> <span style="color:#79c0ff;font-weight:bold">r3</span>, [<span style="color:#79c0ff;font-weight:bold">pc</span>, <span style="color:#a5d6ff">12</span>]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 4</span><span><span style="color:#8b949e;font-style:italic">; calculate actual GOT address 
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 5</span><span><span style="color:#d2a8ff;font-weight:bold">add</span> <span style="color:#79c0ff;font-weight:bold">r3</span>, <span style="color:#79c0ff;font-weight:bold">pc</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 6</span><span><span style="color:#8b949e;font-style:italic">; load var&#39;s offset inside GOT
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 7</span><span><span style="color:#d2a8ff;font-weight:bold">ldr</span> <span style="color:#79c0ff;font-weight:bold">r2</span>, [<span style="color:#79c0ff;font-weight:bold">pc</span>, <span style="color:#a5d6ff">12</span>]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 8</span><span><span style="color:#8b949e;font-style:italic">; load location of var from GOT
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 9</span><span><span style="color:#d2a8ff;font-weight:bold">ldr</span> <span style="color:#79c0ff;font-weight:bold">r3</span>, [<span style="color:#79c0ff;font-weight:bold">r3</span>, <span style="color:#79c0ff;font-weight:bold">r2</span>]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">10</span><span><span style="color:#8b949e;font-style:italic">; write 1 to var
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">11</span><span><span style="color:#d2a8ff;font-weight:bold">movs</span>    <span style="color:#79c0ff;font-weight:bold">r2</span>, <span style="color:#a5d6ff">1</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">12</span><span><span style="color:#d2a8ff;font-weight:bold">str</span> <span style="color:#79c0ff;font-weight:bold">r2</span>, [<span style="color:#79c0ff;font-weight:bold">r3</span>, <span style="color:#a5d6ff">0</span>]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">13</span><span><span style="color:#8b949e;font-style:italic">; return
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">14</span><span><span style="color:#d2a8ff;font-weight:bold">bx</span>  <span style="color:#79c0ff;font-weight:bold">lr</span></span></span></code></pre></div>
+      <figcaption class="code-caption"><span>Same PIC code from earlier which accesses a global variable via the GOT. Pay close attention to how the address of the GOT is loaded.</span> </figcaption>
+</figure>
+<figure class="code-figure">
+      <h4>Accessing GOT via PIC register</h4><div class="highlight" title="Accessing GOT via PIC register" caption="Here, the address to the GOT is always stored in the register `r9`. So we can use that to directly access the GOT entry of our global variable."><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-text-size-adjust:none;display:grid;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 1</span><span><span style="color:#79c0ff;font-weight:bold">foo:</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 2</span><span><span style="color:#8b949e;font-style:italic">; load var&#39;s offset inside GOT
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 3</span><span><span style="color:#d2a8ff;font-weight:bold">ldr</span> <span style="color:#79c0ff;font-weight:bold">r2</span>, [<span style="color:#79c0ff;font-weight:bold">pc</span>, <span style="color:#a5d6ff">12</span>]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 4</span><span><span style="color:#8b949e;font-style:italic">; use the PIC base register (r9) to
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 5</span><span><span style="color:#8b949e;font-style:italic">; access var&#39;s GOT entry
+</span></span></span><span style="display:flex; background-color:#6e7681"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 6</span><span><span style="color:#d2a8ff;font-weight:bold">ldr</span> <span style="color:#79c0ff;font-weight:bold">r3</span>, [<span style="color:#79c0ff;font-weight:bold">r9</span>, <span style="color:#79c0ff;font-weight:bold">r2</span>] 
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 7</span><span><span style="color:#8b949e;font-style:italic">; write 1 to var
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 8</span><span><span style="color:#d2a8ff;font-weight:bold">movs</span>    <span style="color:#79c0ff;font-weight:bold">r2</span>, <span style="color:#a5d6ff">1</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 9</span><span><span style="color:#d2a8ff;font-weight:bold">str</span> <span style="color:#79c0ff;font-weight:bold">r2</span>, [<span style="color:#79c0ff;font-weight:bold">r3</span>, <span style="color:#a5d6ff">0</span>] 
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">10</span><span><span style="color:#8b949e;font-style:italic">; return
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">11</span><span><span style="color:#d2a8ff;font-weight:bold">bx</span>  <span style="color:#79c0ff;font-weight:bold">lr</span></span></span></code></pre></div>
+      <figcaption class="code-caption"><span>Here, the address to the GOT is always stored in the register <code>r9</code>. So we can use that to directly access the GOT entry of our global variable.</span> </figcaption>
+</figure>
+
+</div>
+
+<p>Tock uses this compiler flag for compiling C user applications even without any shared libraries. The PIC base register is used for normal accesses to global data.</p>
+<p>Tock C applications are also compiled with the <code>-mno-pic-data-is-text-relative</code> and <code>-msingle-pic-base</code> flags. The <code>-mno-pic-data-is-text-relative</code> flag explicitly tells the compiler to not assume that data and text sections will be relative to each other. This flag prevents global data accesses from being done using PC-relative addressing. Instead, the compiler generates code that accesses data members by going through the GOT. The <code>-msingle-pic-base</code> marks the PIC base register as read-only for the code that GCC generates. The <a href="https://gcc.gnu.org/onlinedocs/gcc/ARM-Options.html">ARM GCC manual</a> has more information on all of these flags.</p>
+<h4 id="setting-pic-base-register">Setting PIC Base Register</h4>
+<p>Another question remains, how does the PIC base register get set in the first place? Tock has a bit of code run before the application starts up which performs this step. This is part of the <a href="https://en.wikipedia.org/wiki/Crt0"><code>crt0</code> or C runtime</a>. This is a bit of code which runs before the application&rsquo;s <code>main</code> function. For Tock applications written in C, the <code>crt0</code> routine is responsible for setting up the PIC base register among other things such as copying GOT and data sections from the original binary into memory as well as actually calling the application&rsquo;s <code>main</code> function. <a href="https://github.com/atar13/libtock-c/blob/2dad6471855757fe60094971acf8937ebbe38852/libtock/crt0.c">Here&rsquo;s the Tock <code>crt0</code> code</a>. To help the <code>crt0</code> know where the GOT section is within the binary, the linker annotates the binary with the location of the GOT within the executable. The linker does this because Tock C applications are linked with a <a href="https://github.com/atar13/libtock-c/blob/2dad6471855757fe60094971acf8937ebbe38852/userland_generic.ld#L29-L73">custom linker script which defines this section called <code>crt0_header</code></a>.</p>
+<h1 id="shared-libraries-for-tockos">Shared Libraries for TockOS</h1>
+<h1 id="high-level-design">High Level Design</h1>
+<p>Just like on traditional operating systems, embedded operating systems will need a mechanism to perform relocations to perform function calls to shared libraries. Unlike traditional operating systems, embedded operating systems lack virtual memory and the ability to load code at arbitrary locations in a process&rsquo;s address space.</p>
+<h2 id="build-configuration">Build configuration</h2>
+<p>Since the location of shared libraries in flash memory cannot be known at build time, shared libraries must be built as position independent code (PIC) as discussed earlier. This means that shared libraries will need to access their global data members via a Global Offset Table (GOT).</p>
+<h2 id="performing-relocations-at-flash-time">Performing relocations at flash-time</h2>
+<p>To perform the relocations needed to access shared library symbols, one option is to implement a dynamic linker similar to the ones used on desktop/server operating systems. Before the application starts executing, the dynamic linker would find the shared libraries the application depends on and perform the necessary relocations. Unlike desktop/server operating systems, embedded operating systems typically lack a file system, so the dynamic linker would need to traverse flash memory to find the shared libraries.</p>
+<p>However, on embedded devices there is an opportunity for optimization.  Once the shared library is built and flashed onto the device, the location of the shared libraries code will be at a constant physical address. Recall that embedded devices typically execute code directly from flash memory which removes the need for code sections to be loaded into memory. Since the code of the shared library will always be at the same location in flash memory, function calls to shared library functions can be resolved at &ldquo;flash time&rdquo;. In other words, references to the shared library functions can be resolved to directly point to the actual function addresses in flash memory for all processes. This optimization eliminates the overhead of resolving shared library symbols at runtime.</p>
+<h2 id="kernel-and-runtime">Kernel and runtime</h2>
+<p>Now that both the application and shared library code has been flashed and references to shared library symbols have been resolved, the next step is to allocate memory. The kernel will allocate memory for any shared libraries data sections that an application needs. Each application will get its own copy of the shared library&rsquo;s data section to maintain isolation between applications.</p>
+<p>Then, the C runtime takes care of copying the GOT and data sections of the shared library into application memory. It also sets up the PIC base register to point to the GOT of the shared library in application memory which allows shared library functions to access their own global data members.</p>
+<figure class="figure-bg figure-max-width-700px"><img src="/blog/shared-libraries/high_level_design.svg"
+    alt="The blue boxes indicate steps that happen at build/flash time while the orange boxes indicate steps that happen at runtime when the application is started. Finally, the green box is the actual application code itself once any startup procedures have completed. The application and shared library code are built separately as position independent code (PIC). Both the application and shared library binaries are flashed onto the device. When the application is flashed, references shared library code are resolved. The location of the shared library code is known in flash, so any references in the application binary can be resolved. When the application is started, the operating system allocates memory for the application and any shared libraries it depends on. Before the app starts up, the app&rsquo;s runtime copies the GOT and data sections from the shared library binary in flash into application memory. The application can start executing and making shared library function calls. "><figcaption>
+      <p>The blue boxes indicate steps that happen at build/flash time while the orange boxes indicate steps that happen at runtime when the application is started. Finally, the green box is the actual application code itself once any startup procedures have completed. <ol> <li> The application and shared library code are built separately as position independent code (PIC).</li> <li> Both the application and shared library binaries are flashed onto the device. </li> <li> When the application is flashed, references shared library code are resolved. The location of the shared library code is known in flash, so any references in the application binary can be resolved. </li> <li> When the application is started, the operating system allocates memory for the application and any shared libraries it depends on. </li> <li> Before the app starts up, the app&rsquo;s runtime copies the GOT and data sections from the shared library binary in flash into application memory. </li> <li> The application can start executing and making shared library function calls. </li> <ol></p>
+    </figcaption>
+</figure>
+
+<h1 id="implementation">Implementation</h1>
+<p>I have updated the Tock operating system and its supporting tools to support shared libraries. Applications are able to call into shared library code where the library code can perform its own global data accesses. With that being said, the implementation is limited in scope and exhibits a few limitations. This implementation targets applications and shared libraries written in the C programming language, compiled with GCC for the 32-bit ARM architecture.</p>
+<p>Let&rsquo;s start by examining what changes to PIC on Tock when we want to add shared libraries to the mix.</p>
+<p>Let&rsquo;s have a new running example with a sample application which calls into a function provided by a shared library. The shared library function makes an access to it&rsquo;s global variable.</p>
+<figure class="code-figure">
+      <h4>Application</h4><div class="highlight" title="Application"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#include</span> <span style="color:#8b949e;font-weight:bold;font-style:italic">&lt;libtest.h&gt;</span><span style="color:#8b949e;font-weight:bold;font-style:italic">
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">int</span> <span style="color:#d2a8ff;font-weight:bold">main</span>(<span style="color:#ff7b72">void</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">int</span> result <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#d2a8ff;font-weight:bold">lib_func</span>(<span style="color:#a5d6ff">23</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">return</span> result;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</figure>
+<figure class="code-figure">
+      <h4>Shared Library</h4><div class="highlight" title="Shared Library"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#ff7b72">int</span> glob <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">42</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">int</span> <span style="color:#d2a8ff;font-weight:bold">lib_func</span>(<span style="color:#ff7b72">int</span> x) {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">return</span> x <span style="color:#ff7b72;font-weight:bold">+</span> glob;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</figure>
+<h2 id="calling-a-shared-library-function">Calling a Shared Library Function</h2>
+<p>Calls to shared library functions need to be resolved at runtime as the compiler/linker doesn&rsquo;t know where the shared library code will be loaded into memory. Recall the workings of the PLT, when a shared library function is called, execution first transfers to code from an entry in the PLT. Once the location of the function is resolved, the PLT code will look up the location of the function in the GOT and jump to that address.</p>
+<p>The code in the PLT needs to access entries in the GOT to know where the function exists. This raises the question: how does PLT code access the GOT? PLT code is just like the other text sections and is executed directly from flash memory. As with text, when executing PLT code from flash, any lookups to the GOT cannot be done in a PC-relative fashion since the offset between text and data sections can&rsquo;t be known at compile-time. Similar to GOT accesses for global data, code in the PLT should use the special PIC base register discussed earlier (if compiled with <code>-mpic-register</code>).</p>
+<h3 id="plt-doesnt-use-pic-base-register">PLT doesn&rsquo;t use PIC base register</h3>
+<p>However, the code generated by <code>arm-none-eabi-gcc</code> version 14.2.1 only generates PC-relative GOT accesses in the PLT and not via the PIC base register. Interestingly, other accesses to the GOT (e.g. global variables) all compile correctly and use the PIC base register to do so. It&rsquo;s only the GOT accesses within the PLT entries which are PC-relative.</p>
+<p>Here&rsquo;s the <code>objdump</code> of the compiled ELF binary from the above application code example showcasing the generated assembly for the main function and <code>.plt</code> section.</p>
+<figure class="code-figure"><div class="highlight" caption="arm-none-eabi-objdump -D -marm examples/shlib_app/build/cortex-m4/cortex-m4.elf" verbatim="true"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;display:grid;"><code class="language-text" data-lang="text"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 1</span><span>80000072 &lt;main&gt;:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 2</span><span>80000072:	2017      	movs	r0, #23
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 3</span><span>80000074:	f001 baa4 	b.w	800015c0 &lt;_etext+0x10&gt;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 4</span><span>...
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 5</span><span>800015b0 &lt;.plt&gt;:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 6</span><span>800015b0:	b500      	push	{lr}
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 7</span><span>800015b2:	f8df e008 	ldr.w	lr, [pc, #8]	@ 800015bc &lt;.plt+0xc&gt;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 8</span><span>800015b6:	44fe      	add	lr, pc
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 9</span><span>800015b8:	f85e ff08 	ldr.w	pc, [lr, #8]!
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">10</span><span>800015bc:	7ffff2d4 	 svcvc	0x00fff2d4
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">11</span><span>; ***function call starts by jumping to here***
+</span></span><span style="display:flex; background-color:#6e7681"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">12</span><span>800015c0:	f24f 2cd0 	movw	ip, #62160	@ 0xf2d0
+</span></span><span style="display:flex; background-color:#6e7681"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">13</span><span>800015c4:	f6c7 7cff 	movt	ip, #32767	@ 0x7fff
+</span></span><span style="display:flex; background-color:#6e7681"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">14</span><span>800015c8:	44fc      	add	ip, pc
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">15</span><span>800015ca:	f8dc f000 	ldr.w	pc, [ip]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">16</span><span>800015ce:	e7fc      	b.n	800015ca &lt;.plt+0x1a&gt;</span></span></code></pre></div>
+      <figcaption class="code-caption"><span style="font-family:monospace;">arm-none-eabi-objdump -D -marm examples/shlib_app/build/cortex-m4/cortex-m4.elf</span> </figcaption>
+</figure>
+<p>Let&rsquo;s walk through what&rsquo;s going wrong:</p>
+<ol>
+<li>The code in main is relatively simple as it loads the first argument (the constant 23) into <code>r0</code> and performs a jump to address <code>0x800015c0</code>.</li>
+<li>Looking at address <code>0x800015c0</code> leads to code in the <code>.plt</code> section. The lines <code>movw	ip, #62160</code> and <code>movt	ip, #32767</code> set register <code>ip</code> to the value <code>0x7ffff2d0</code> (<a href="https://developer.arm.com/documentation/dui0489/c/arm-and-thumb-instructions/general-data-processing-instructions/movt"><code>movt</code></a> sets the high 16 bits of the destination while leaving the lower 16 untouched).</li>
+<li>The next line at address <code>0x800015c8</code> increments <code>ip</code> (which is <code>0x7ffff2d0</code>) by the program counter (which is <code>0x800015ca</code>). This line sets <code>ip</code> to the value of an entry in the GOT by using an offset relative to the program counter. This is where the problem with this code arises. As mentioned above, PC-relative accesses to the GOT cannot be done since the distance between text and data sections is not known at compile time (which is when this code was generated).</li>
+<li>Finally, line <code>0x800015ca</code> dereferences the new value of <code>ip</code> and sets the program counter. Recall in the previous line where <code>ip</code> is meant to hold the address of a GOT entry. By setting program counter, this line attempts to jump to the address held in the GOT entry that <code>ip</code> is pointing to. However, as noted in the previous line, the offset between this code (which is in flash) and the GOT section (which will exist in memory) cannot be known at this time.</li>
+</ol>
+<p>There is a <a href="https://answers.launchpad.net/gcc-arm-embedded/+question/675869">post to the GNU ARM Embedded Toolchain Q&amp;A</a> which describes the same bug. A user reported using the same flags (<code>-msingle-pic-base</code> <code>-mpic-register=r9</code> <code>-mno-pic-data-is-text-relative</code>) and saw that their PLT code also exhibits PC-relative addressing to the GOT, instead of using the PIC base register <code>r9</code>. The post includes ARM assembly similar to that of the PLT entry from the <code>objdump</code> above. Unfortunately, this post was made in 2018 and has no replies.</p>
+<p>One can assume this is a unintended behavior on the part of GCC. Why should only PLT got accesses be PC-relative while all other ones respect the compiler flags and use <code>r9</code> to access the GOT? With this in mind, there are a few options to have function calls to shared library functions working:</p>
+<ol>
+<li>Patch ARM Embedded GCC</li>
+<li>Rewrite PLT entries to use PIC base addressing</li>
+<li>Bypass the PLT and jump directly to the function address held in a GOT entry</li>
+</ol>
+<p>While patching GCC is the most direct way to fix this problem, it is out of scope for this particular project. However, <a href="#future-work">this section</a> discusses potential patches to GCC in more depth.</p>
+<p>Rewriting the code in the PLT entries is a promising option. Simply replace the existing PC-relative PLT code with instructions that will look up into the GOT using the PIC base register. However, this seems simpler than it is in reality. How does one locate the instructions to rewrite? Are they just any instructions that match exactly what GCC generates in the <code>.plt</code> section? It&rsquo;s possible that the new instructions take up more space and need to shift around other parts of the binary. Also, the compiled code is using an instruction set called <a href="https://developer.arm.com/documentation/ddi0344/k/programmers-model/thumb-2-instruction-set"><em>Thumb-2</em></a> which is a compressed version of the ARM architecture where each instruction can be either 16 or 32 bits wide, further complicating any binary parsing.</p>
+<h3 id="-fno-plt">-fno-plt</h3>
+<p>Bypassing the PLT is what this implementation opted for.  To bypass the PLT, there is a GCC code generation flag called <code>-fno-plt</code> which meets the criteria.  The <a href="https://gcc.gnu.org/onlinedocs/gcc-14.2.0/gcc/Code-Gen-Options.html">GCC documentation</a> describes it as such:</p>
+<blockquote>
+<p>Do not use the PLT for external function calls in position-independent code. Instead, load the callee address at call sites from the GOT and branch to it.</p>
+</blockquote>
+<p>This means, as long as the right GOT entry is populated with the function address, application code can jump directly to the address in that GOT entry when making a shared library call.</p>
+<p>While this flag appears to achieve the intended goal of directly accessing function addresses via the GOT, inspection of the generated code shows no difference in code generation. With the flag enabled on <code>arm-none-eabi-gcc</code> version 14.2.1, the PLT is still generated, and the code makes jumps to the PLT. Another <a href="https://answers.launchpad.net/gcc-arm-embedded/+question/669758">post on the GNU ARM Embedded Q&amp;A, titled &ldquo;Option -fno-plt has no effect&rdquo;</a>, experiences the same issue with the <code>-fno-plt</code> flag. One of the replies state that &ldquo;Support for -fno-plt is not implemented presently&rdquo;. However, another reply of the same post mentions an alternative. They state that &ldquo;The use and creation of the plt can be circumvented by the use of function pointers. This will create a jump directly through GOT instead of creating a plt entry&rdquo;.</p>
+<h3 id="function-calls-via-function-pointers">Function calls via function pointers</h3>
+<p>Using function pointers certainly gets around using the PLT for function calls. Instead, the code loads the function pointer just as it would any other data access, dereferences the pointer and jumps to the resulting address. Below shows the difference in C code and generated assembly when declaring a function signature as a function pointer and calling the function. The main downside to using a function pointer is that it requires all shared library function declarations to be modified. These are typically found in the header files of libraries, so if a function pointer only header file was written for a library, it is possible that only the reference to the header could be swapped out with no changes to the rest of the actual application code.</p>
+<div class="columns">
+    <figure class="code-figure"><div class="highlight" caption="Declaration of `lib_func`"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#ff7b72">int</span> <span style="color:#d2a8ff;font-weight:bold">lib_func</span>(<span style="color:#ff7b72">int</span> x);</span></span></code></pre></div>
+      <figcaption class="code-caption"><span>Declaration of <code>lib_func</code></span> </figcaption>
+</figure>
+<figure class="code-figure"><div class="highlight" caption="Declaration of a function pointer to `lib_func`"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#ff7b72">int</span> (<span style="color:#ff7b72;font-weight:bold">*</span>lib_func)(<span style="color:#ff7b72">int</span> x);</span></span></code></pre></div>
+      <figcaption class="code-caption"><span>Declaration of a function pointer to <code>lib_func</code></span> </figcaption>
+</figure>
+
+</div>
+
+<div class="columns">
+    <figure class="code-figure"><div class="highlight" caption="Assembly of calling `lib_func` via PLT entry."><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">1</span><span><span style="color:#79c0ff;font-weight:bold">main:</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">2</span><span><span style="color:#8b949e;font-style:italic">; Set argument 1 to 23
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">3</span><span><span style="color:#d2a8ff;font-weight:bold">movs</span>    <span style="color:#79c0ff;font-weight:bold">r0</span>, <span style="color:#8b949e;font-style:italic">#23
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">4</span><span><span style="color:#8b949e;font-style:italic">; Jump to PLT entry for lib_func 
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">5</span><span><span style="color:#d2a8ff;font-weight:bold">b.w</span>     <span style="color:#a5d6ff">80001730</span></span></span></code></pre></div>
+      <figcaption class="code-caption"><span>Assembly of calling <code>lib_func</code> via PLT entry.</span> </figcaption>
+</figure>
+<figure class="code-figure"><div class="highlight" caption="Assembly of calling `lib_func` via a function pointer"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 1</span><span><span style="color:#79c0ff;font-weight:bold">main:</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 2</span><span><span style="color:#8b949e;font-style:italic">; Load function pointer GOT offset
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 3</span><span><span style="color:#d2a8ff;font-weight:bold">ldr</span>     <span style="color:#79c0ff;font-weight:bold">r3</span>, [<span style="color:#79c0ff;font-weight:bold">pc</span>, <span style="color:#8b949e;font-style:italic">#8] 
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 4</span><span><span style="color:#8b949e;font-style:italic">; Load GOT entry using PIC Base 
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 5</span><span><span style="color:#8b949e;font-style:italic">; register:
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 6</span><span><span style="color:#8b949e;font-style:italic">; GOT Base (r9) + offset (r3)
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 7</span><span><span style="color:#d2a8ff;font-weight:bold">ldr.w</span>   <span style="color:#79c0ff;font-weight:bold">r3</span>, [<span style="color:#79c0ff;font-weight:bold">r9</span>, <span style="color:#79c0ff;font-weight:bold">r3</span>]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 8</span><span><span style="color:#8b949e;font-style:italic">; Set argument 1 to 23
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 9</span><span><span style="color:#d2a8ff;font-weight:bold">movs</span>    <span style="color:#79c0ff;font-weight:bold">r0</span>, <span style="color:#8b949e;font-style:italic">#23
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">10</span><span><span style="color:#8b949e;font-style:italic">; Dereference function pointer
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">11</span><span><span style="color:#d2a8ff;font-weight:bold">ldr</span>     <span style="color:#79c0ff;font-weight:bold">r3</span>, [<span style="color:#79c0ff;font-weight:bold">r3</span>, <span style="color:#8b949e;font-style:italic">#0]
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">12</span><span><span style="color:#8b949e;font-style:italic">; Jump directly to lib_func 
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">13</span><span><span style="color:#d2a8ff;font-weight:bold">bx</span>      <span style="color:#79c0ff;font-weight:bold">r3</span></span></span></code></pre></div>
+      <figcaption class="code-caption"><span>Assembly of calling <code>lib_func</code> via a function pointer</span> </figcaption>
+</figure>
+
+</div>
+
+<h2 id="shared-library-data-accesses">Shared Library data accesses</h2>
+<p>Now that we&rsquo;re able to call shared library functions, how does the shared library code access its own global variables. Remember our running example where our shared library code accesses our global variable <code>glob</code>.</p>
+<h3 id="clobbering-pic-base-register">Clobbering PIC base register</h3>
+<p>The <code>-mpic-register=r9</code> flag works fine in isolation, but the addition of shared libraries throws a wrench into the works. If shared libraries were also compiled with the same flags, the special PIC base register (<code>r9</code>) would be conflicting between the address of the application’s GOT and the shared library’s GOT. Both the application and shared library need access to their separate, respective GOT to access their own data section, so simply sharing the same PIC base register will not suffice.</p>
+<p>One potential solution is to switch the value of the PIC base register when execution crosses the boundary between applications and shared libraries. The application calling the shared library function would be responsible for saving the value of its PIC base register (e.g. by pushing it onto the stack). Then, when control flow transfers to the shared library, it will restore the value of its own PIC base. When the library call completes, the library saves its PIC Base and the application restores its own.</p>
+<p>Here&rsquo;s some pseudo ARM assembly of the PIC base register <code>r9</code> being saved and restored at the
+function call boundary between applications and shared libraries:</p>
+<figure class="code-figure">
+      <h4>Application</h4><div class="highlight" title="Application"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span><span style="color:#79c0ff;font-weight:bold">main:</span>
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span><span style="color:#d2a8ff;font-weight:bold">push</span> <span style="color:#79c0ff;font-weight:bold">r9</span> <span style="color:#8b949e;font-style:italic">; save app PIC base
+</span></span></span><span style="display:flex;"><span><span style="color:#d2a8ff;font-weight:bold">bl</span> <span style="color:#79c0ff;font-weight:bold">lib_func</span>
+</span></span><span style="display:flex;"><span><span style="color:#d2a8ff;font-weight:bold">pop</span> <span style="color:#79c0ff;font-weight:bold">r9</span> <span style="color:#8b949e;font-style:italic">; restore app PIC base
+</span></span></span><span style="display:flex;"><span>...</span></span></code></pre></div>
+</figure>
+<figure class="code-figure">
+      <h4>Shared Library</h4><div class="highlight" title="Shared Library"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span><span style="color:#79c0ff;font-weight:bold">lib_func:</span>
+</span></span><span style="display:flex;"><span><span style="color:#d2a8ff;font-weight:bold">ldr</span> <span style="color:#79c0ff;font-weight:bold">r9</span>, <span style="color:#f85149">???</span> <span style="color:#8b949e;font-style:italic">; restore lib PIC base
+</span></span></span><span style="display:flex;"><span>... <span style="color:#8b949e;font-style:italic">; do work
+</span></span></span><span style="display:flex;"><span><span style="color:#d2a8ff;font-weight:bold">str</span> <span style="color:#f85149">???</span>, <span style="color:#79c0ff;font-weight:bold">r9</span> <span style="color:#8b949e;font-style:italic">; save lib PIC base
+</span></span></span><span style="display:flex;"><span><span style="color:#d2a8ff;font-weight:bold">bx</span> <span style="color:#79c0ff;font-weight:bold">lr</span> <span style="color:#f85149">;</span> <span style="color:#79c0ff;font-weight:bold">return</span></span></span></code></pre></div>
+</figure>
+<p>An alternative approach could implement this functionality using a jump table, similar to the PLT. Every time the application calls a shared library function, it first jumps to a bit of code responsible for saving the PIC base before moving onto the actual library code. With regard to efficiency, this approach adds additional overhead on every shared library function call to save and restore the respective PIC base registers.</p>
+<p>While this swapping of the PIC base seems promising, it raises a few questions. Where will the shared library restore its PIC base register value from? It can’t be stored in the data section since the PIC base register itself is needed to access the data section. It can’t be in the text section since the location of the GOT is known at runtime when memory is allocated. Additionally, GCC did not seem to have compiler flags which would generate the extra code needed to save and restore the PIC base on every shared library call.</p>
+<h3 id="reserving-a-shared-library-pic-base-register">Reserving a shared library PIC base register</h3>
+<p>As a means to achieve a working proof of concept, the idea to have applications and shared libraries shared a single register was put on hold. Instead, this implementation opts to set aside other registers to act as the PIC base for shared libraries. This way, both the application and shared library can coexist without clobbering the other’s PIC base register. For example, if <code>r9</code> is reserved as the application PIC base, <code>r10</code> could be the first shared library’s PIC base, <code>r11</code> for the second and so on.</p>
+<figure class="figure-bg figure-max-width-700px"><img src="/blog/shared-libraries/r9r10.svg"
+    alt="Application&#39;s access their GOT via an r9 register while each shared library will have it&#39;s own register, r10."><figcaption>
+      <p>Overview of an application and a shared library both accessing their own data sections via separate PIC base registers. Green represents flash memory and yellow represents RAM.</p>
+    </figcaption>
+</figure>
+
+<p>As for initializing the shared library’s PIC base register, the application startup (<code>crt0</code>) routine can set the PIC base registers for each library that it is using. The shared library would be compiled with the <code>-msingle-pic-base</code> option which would make GCC avoid using its PIC base register (e.g. <code>r10</code>) in any code generation of the library. However, this would not prevent the compiler from emitting code that clobbers the library’s PIC base register since the application is compiled separately.</p>
+<p>One way to have GCC avoid using the library’s PIC base register is to use a GCC feature called <a href="https://gcc.gnu.org/onlinedocs/gcc-4.6.1/gcc/Explicit-Reg-Vars.html#Explicit-Reg-Vars">Global Register Variables</a>. It will reserve a register to be used exclusively for a specific global variable. As long as the application doesn’t use this global variable, the register will remain untouched by GCC.</p>
+<p>The main drawback to this approach is that the number of shared libraries a single app can use is limited to how many registers are available to be reserved to be PIC bases. There’s thirteen general purpose registers on an architecture like ARMv7-M. Several are already reserved by the calling convention to be used for passing function arguments. <code>r9</code> is already taken as the PIC base for the application which doesn’t leave too many registers left for shared library PIC bases. Additionally, with fewer registers available for the compiler to use, performance may take a hit as the compiler might generate code which performs more memory accesses due to the limited pool of registers available.</p>
+<p>In summary, these are the additional GCC flags chosen for compiling shared libraries (Note that the register chosen for <code>-mpic-register</code> isn’t required to be <code>r10</code>. It must be different from <code>r9</code> and the PIC base of any other shared library linked with a given application):</p>
+<ul>
+<li><code>-fPIC</code></li>
+<li><code>-shared</code></li>
+<li><code>-mpic-register=r10</code></li>
+<li><code>-msingle-pic-base</code></li>
+<li><code>-mno-pic-data-is-text-relative</code></li>
+</ul>
+<p>In addition to these compiler/linker flags, there were changes to the linker script used for libtock-c applications. The linker script has instructions for the linker that describe how to lay out sections in the final binary. Tock already has a linker script for applications which I modified to organize where &ldquo;dynamic&rdquo; sections end up (these are sections in the ELF binary to help an application access shared libraries). In addition, I created a new linker script to be used for when the shared library&rsquo;s own sections need to be linked.</p>
+<h2 id="performing-relocations">Performing relocations</h2>
+<h3 id="elf2tab">elf2tab</h3>
+<p>Tock supports many boards across multiple architectures. When compiling applications, the Tock build system will compile for all architectures all at once, creating many ELF binaries. Tock bundles these binaries into a <a href="https://book.tockos.org/doc/compilation#tock-application-bundle">Tock Application Bundle (TAB)</a>. A TAB is also known as a fat binary, it is quite literally a <a href="https://en.wikipedia.org/wiki/Tar_(computing)"><code>tar</code> archive</a> of the executable file across several architecture.</p>
+<p><a href="https://github.com/tock/elf2tab"><code>elf2tab</code></a> is a tool which does what it sounds like: it takes multiple ELF binaries and combines them into a single TAB file. In addition, <code>elf2tab</code> prefixes each ELF binary a <a href="https://book.tockos.org/doc/tock_binary_format">Tock Binary Format (TBF)</a> header. This header describes metadata useful to the kernel and Tockloader, such as the entrypoint of the application&rsquo;s program, package name, permissions and more.</p>
+<p>Here&rsquo;s a good ASCII diagram from the <a href="https://book.tockos.org/doc/tock_binary_format">Tock book</a>:</p>
+<figure class="code-figure">
+      <div class='no-highlight'>
+      <pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;" style="padding: 1rem; border-radius: 6px; overflow-x: auto;"><code class="language-text" data-lang="text">Tock App Binary:
+
+Start of app ─►┌──────────────────────┐◄┐          ◄┐          ◄┐
+               │ TBF Header           │ │ Protected │           │
+               ├──────────────────────┤ │ region    │           │
+               │ Protected trailer    │ │           │ Covered   │
+               │ (Optional)           │ │           │ by        │
+               ├──────────────────────┤◄┘           │ integrity │
+               │                      │             │           │ Total
+               │ Userspace            │             │           │ size
+               │ Binary               │             │           │
+               │                      │             │           │
+               │                      │             │           │
+               │                      │             │           │
+               ├──────────────────────┤            ◄┘           │
+               │ TBF Footer           │                         │
+               │ (Optional)           │                         │
+               ├──────────────────────┤                         │
+               │ Padding (Optional)   │                         │
+               └──────────────────────┘                        ◄┘</code></pre>
+      <div>
+</figure>
+<p>To support shared libraries, <code>elf2tab</code> was modified to collect information which is useful for Tockloader to perform relocations later. Since elf2tab already parses the ELF binaries, it&rsquo;s able to inspect what references to shared library symbols require relocations.</p>
+<p><code>elf2tab</code> needs to tell Tockloader two pieces of information to bridge the gap for shared library function calls:</p>
+<ol>
+<li>Where the shared library function lives within the shared library executable.</li>
+<li>Where to patch the reference to the shared library function within the GOT of the application binary.</li>
+</ol>
+<p>For #1, once we know the names of the shared library functions, we can look them up in the shared library&rsquo;s ELF symbol table. We know the names of the functions to look for by examining the dynamic symbol table of the application&rsquo;s ELF binary.</p>
+<p>To mirror what <code>elf2tab</code> is doing while parsing the application and shared library ELF binaries, we can print out the same information with <code>readelf</code>:</p>
+<figure class="code-figure"><div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>arm-none-eabi-readelf --symbols libtest/build/cortex-m4/libtest.so</span></span></code></pre></div>
+</figure>
+<figure class="code-figure"><div class="highlight" caption="We can use `readelf` to see where our shared library function exists in the shared library ELF binary."><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;display:grid;"><code class="language-text" data-lang="text"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">1</span><span>Symbol table &#39;.symtab&#39; contains 42 entries:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">2</span><span>   Num:    Value  Size Type    Bind   Vis      Ndx Name
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">3</span><span>     0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">4</span><span>     1: 00000000     0 SECTION LOCAL  DEFAULT    1 .got
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">5</span><span>     2: 80000000     0 SECTION LOCAL  DEFAULT    2 .crt0_header
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">6</span><span>     3: 80000028     0 SECTION LOCAL  DEFAULT    3 .dynsym
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">7</span><span>     4: 80000108     0 SECTION LOCAL  DEFAULT    4 .dynstr
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">8</span><span>...
+</span></span><span style="display:flex; background-color:#6e7681"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">9</span><span>    31: 800001ad    32 FUNC    GLOBAL DEFAULT   11 lib_func</span></span></code></pre></div>
+      <figcaption class="code-caption"><span>We can use <code>readelf</code> to see where our shared library function exists in the shared library ELF binary.</span> </figcaption>
+</figure>
+<figure class="code-figure"><div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>arm-none-eabi-readelf --dyn-syms examples/shlib_app/build/cortex-m4/cortex-m4.elf</span></span></code></pre></div>
+</figure>
+<figure class="code-figure"><div class="highlight" caption="We can also use `readelf` to see what dynamic symbols our application depends on by examining its "dynamic symbol" table"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;display:grid;"><code class="language-text" data-lang="text"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 1</span><span>Symbol table &#39;.dynsym&#39; contains 11 entries:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 2</span><span>   Num:    Value  Size Type    Bind   Vis      Ndx Name
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 3</span><span>     0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND
+</span></span><span style="display:flex; background-color:#6e7681"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 4</span><span>     1: 00000000     0 FUNC    GLOBAL DEFAULT  UND lib_func
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 5</span><span>     2: 80001ff6     0 NOTYPE  GLOBAL DEFAULT   10 _etext
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 6</span><span>     3: 00070000     0 NOTYPE  GLOBAL DEFAULT  ABS PROG_LENGTH
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 7</span><span>     4: 00000000     0 NOTYPE  WEAK   DEFAULT  UND _printf_float
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 8</span><span>     5: 00000000     0 NOTYPE  WEAK   DEFAULT  UND __call_exitprocs
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 9</span><span>     6: 000009ec     0 NOTYPE  GLOBAL DEFAULT   14 _bss
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">10</span><span>     7: 00010000     0 NOTYPE  GLOBAL DEFAULT  ABS RAM_LENGTH
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">11</span><span>     8: 80000180     0 NOTYPE  GLOBAL DEFAULT   10 _text
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">12</span><span>     9: 000008ec     0 NOTYPE  GLOBAL DEFAULT    6 _data
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">13</span><span>    10: 00000800     0 NOTYPE  GLOBAL DEFAULT    1 _got</span></span></code></pre></div>
+      <figcaption class="code-caption"><span>We can also use <code>readelf</code> to see what dynamic symbols our application depends on by examining its &ldquo;dynamic symbol&rdquo; table</span> </figcaption>
+</figure>
+<p>For #2, we can look through the application&rsquo;s relocation table (such as <code>.rel.text</code>) to tell us where relocations exist and which ones match the function names we are looking for.</p>
+<p>Once <code>elf2tab</code> has grabbed this information, it needs to pass it onto Tockloader to actually perform the relocations. As mentioned earlier, TAB files are just a tar archive, so I added one more file to the archive to describe this information. It&rsquo;s a TOML file with the following format:</p>
+<figure class="code-figure"><div class="highlight" caption="Metadata which `elf2tab` saves to a TOML file and passes onto Tockloader."><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span>[lib_func]
+</span></span><span style="display:flex;"><span>app_name = <span style="color:#a5d6ff">&#34;shlib_app&#34;</span>
+</span></span><span style="display:flex;"><span>app_got_addr = <span style="color:#a5d6ff">0</span>x1f20
+</span></span><span style="display:flex;"><span>lib_name = <span style="color:#a5d6ff">&#34;libtest&#34;</span>
+</span></span><span style="display:flex;"><span>lib_func_offset = <span style="color:#a5d6ff">0</span>x80000029</span></span></code></pre></div>
+      <figcaption class="code-caption"><span>Metadata which <code>elf2tab</code> saves to a TOML file and passes onto Tockloader.</span> </figcaption>
+</figure>
+<p>The TOML file contains a section for each function (e.g. <code>lib_func</code>). Within each section, it describes how an app depends on a given shared library function. The field <code>app_got_addr</code> represents the location of the GOT entry in the application binary. Specifically it is the address within the application TBF file created by <code>elf2tab</code>. This address is slightly different than where the GOT entry is located in the original ELF file because <code>elf2tab</code> changes the layout of the sections. Recall from the key points that Tockloader, will perform relocations during <em>flash time</em>. So it will be modifying the app&rsquo;s GOT directly in flash memory. The <a href="#tockloader">Tockloader</a> section will dive more into this. Once the value at this location in the binary is patched, the correct value will be carried over once the <code>.got</code> section is loaded into memory at application startup. The field <code>lib_name</code> indicates the Tock package name of the shared library which contains the function being called. Finally, the <code>lib_func_offset</code> field represents the location of the function in the shared library. Note that this isn&rsquo;t an offset into the shared library ELF file but the address that the linker assigned to the function symbol at link-time. The address starts with <code>0x8000____</code> because the linker script places flash sections starting from <code>0x80000000</code>.</p>
+<p>In addition to this relocation TOML file, <code>elf2tab</code> adds a new TBF header which describes if the current TBF represents a shared library or not. Secondly, this TBF header contains the package names of any shared libraries this TBF depends on. These package names are represented as a sequence of null-terminated strings as seen in the diagram below. This is the same information found in the <code>DT_NEEDED</code> entries of the &ldquo;dynamic&rdquo; section of an ELF binary. Since the Tock kernel doesn&rsquo;t parse the ELF binary, <code>elf2tab</code> can extract the names of shared library dependencies and provide them to the kernel as a TBF header.</p>
+<figure class="code-figure"><div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>0             2             4             6             8
+</span></span><span style="display:flex;"><span>+-------------+-------------+---------------------------+
+</span></span><span style="display:flex;"><span>| Type (11)   | Length (4+n)| is_shlib (length 4)       |
+</span></span><span style="display:flex;"><span>+-------------+-------------+---------------------------+
+</span></span><span style="display:flex;"><span>| shlib_deps (length n)                                 |
+</span></span><span style="display:flex;"><span>+--------------------------------------------------...--+ </span></span></code></pre></div>
+</figure>
+<p>To summarize what we&rsquo;ve done so far, the figure below shows the full installation process and dependency graph for flashing a shared library and dependent application onto a board. The last step before runtime, is to use Tockloader for flashing (which the next section will dive into).</p>
+<figure class="figure-bg figure-max-width-700px"><img src="/blog/shared-libraries/install-flow.svg"
+    alt="Dependency Graph of Installing Shared Libraries and Applications"><figcaption>
+      <p>Dependency Graph of Installing Shared Libraries and Applications</p>
+    </figcaption>
+</figure>
+
+<h3 id="tockloader">Tockloader</h3>
+<p>Ok, we&rsquo;ve done our prep, now it&rsquo;s time for the relocations. Tockloader will bridge the gap between the application and the shared library. Tockloader will take the place of the traditional dynamic linker/loader (i.e. <code>ld-linux.so</code>).</p>
+<p>Tockloader knows exactly which applications are running on a board at the time when applications are flashed <sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>. This means that Tockloader can perform any relocations needed for shared library function calls since it knows where both applications and shared libraries are located in flash memory. Therefore, relocations done by Tockloader incur no runtime cost since they occur when applications are being flashed, not at runtime.</p>
+<p>So, first the shared library must be flashed onto the board. Tockloader doesn&rsquo;t do anything special here and just slots it among other applications wherever it finds space in flash memory. As mentioned in the <a href="#efl2tab">elf2tab</a>, any Tock binary now has a TBF header which indicates if the binary is an application or a shared library which allows Tockloader to distinguish between the two while traversing binaries in flash memory.</p>
+<p>Once the shared library is flashed, the application TBF can be flashed. Tockloader reads the relocation TOML file proved by <code>elf2tab</code> and modifies the application binary before flashing it. Tockloader starts by reading the applications and shared libraries already flashed on the board. Once Tockloader finds the shared library specified as a dependency in the TOML file, it notes its location in flash.</p>
+<p>Then, Tockloader patches the application binary before flashing it onto the board. It knows exactly where the GOT entry is in the executable file, so it has no need to perform additional ELF parsing. It just writes the location of the shared library function to the application&rsquo;s corresponding GOT entry.</p>
+<figure class="figure-bg figure-max-width-700px"><img src="/blog/shared-libraries/tockloader-flashing.svg"
+    alt="Procedure of Tockloader performing relocations on applications while the app binary is loaded on the host computer&#39;s memory. Patching the binary happens before the app is flashed and the board starts running."><figcaption>
+      <p><p>Procedure of Tockloader performing relocations on applications while the app binary is loaded on the host computer's memory. Patching the binary happens before the app is flashed and the board starts running.</p> <p>Imagine we're flashing a board which controls a robot vacuum. It needs to control motors and listen to the network for a command to start cleaning. So we have one app to drive the motors and another app to accept commands to start vacuuming from the network. In addition, there's a shared library to perform the networking operations (using <a href='https://en.wikipedia.org/wiki/Thread_(network_protocol)'>Thread</a>).</p> <p>Let's go through what's going on step by step.</p> <ol><li>First, let's flash the "Thread Networking" shared library to the board. This is flashed like any other app and is slotted among the existing apps (in this case the "Motor Controller App").</li> <li>The next step covers everything that's needed to flash an application that depends on a shared library. Here we are flashing the "Input RX App" which depends on the "Thread Networking" shared library. <ol type='a'> <li> Tockloader extracts the relocation TOML file which elf2tab prepared earlier. As a reminder, this contains the information Tockloader needs to rewrite application's GOT entry so that it points to the location of the shared library in flash memory. The relocation TOML file doesn't contain the actual location of the shared library function in flash memory, since elf2tab doesn't know the layout of libraries on the board's storage. However, it contains the offset of the shared library function code within the shared library itself. Tockloader then uses this offset in combination with the actual location of where the shared library starts in flash storage (it knows this by traversing all the apps and shared libraries on the board's storage).</li> <li>Now that Tockloader knows where to patch the GOT in the app's binary and what to patch it with (the actual location of the function in flash), it can perform the modification. Note that Tockloader modifies the GOT in the binary before it gets flashed. So, this write happens in the memory of the host machine that Tockloader is running on (think of your development laptop plugged into a board).</li> <li>Finally, Tockloader flushes the modified app to the flash storage of the board.</li> </ol> </li> <li>Now, the board has started running. After the kernel loads the app, the app's runtime copies the GOT entries (which Tockloader modified) to RAM (volatile memory). Then, the app can freely refer to the modified GOT to call into the shared library function.</li> </ol></p>
+    </figcaption>
+</figure>
+
+<p>The following example shows how application code will use the patched GOT after Tockloader performs its relocations:</p>
+<figure class="code-figure">
+      <h4>Application C code</h4><div class="highlight" title="Application C code" caption="Application code calling into a shared library function via a function pointer as discussed [here](#-fno-plt)."><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#ff7b72">int</span> (<span style="color:#ff7b72;font-weight:bold">*</span>lib_func)(<span style="color:#ff7b72">int</span> x);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">int</span> <span style="color:#d2a8ff;font-weight:bold">main</span>(<span style="color:#ff7b72">void</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">int</span> result <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#d2a8ff;font-weight:bold">lib_func</span>(<span style="color:#a5d6ff">23</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">return</span> result;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+      <figcaption class="code-caption"><span>Application code calling into a shared library function via a function pointer as discussed <a href="#-fno-plt">here</a>.</span> </figcaption>
+</figure>
+<figure class="code-figure">
+      <h4>Compiled assembly of application code</h4><div class="highlight" title="Compiled assembly of application code" caption="Note that the function pointer is just another global variable with its own GOT entry, so it will be accessed the same way via the PIC base register (as shown [here](#function-calls-via-function-pointers)). Assume `r9` points to the start of the GOT (`0x00000800` in the ELF file address space or at runtime: `0x00000800` + application memory start). Note that line at address `800001e4` is loading the constant from address `800001f0`. This constant represents the offset into the GOT for the `lib_func` function pointer."><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;display:grid;"><code class="language-text" data-lang="text"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">1</span><span>800001e4 &lt;main&gt;:
+</span></span><span style="display:flex; background-color:#6e7681"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">2</span><span>800001e4:       4b02            ldr     r3, [pc, #8]    @ (800001f0)
+</span></span><span style="display:flex; background-color:#6e7681"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">3</span><span>800001e6:       f859 3003       ldr.w   r3, [r9, r3]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">4</span><span>800001ea:       2017            movs    r0, #23
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">5</span><span>800001ec:       681b            ldr     r3, [r3, #0]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">6</span><span>800001ee:       4718            bx      r3
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">7</span><span>800001f0:       00000050        andeq   r0, r0, r0, asr r0</span></span></code></pre></div>
+      <figcaption class="code-caption"><span>Note that the function pointer is just another global variable with its own GOT entry, so it will be accessed the same way via the PIC base register (as shown <a href="#function-calls-via-function-pointers">here</a>). Assume <code>r9</code> points to the start of the GOT (<code>0x00000800</code> in the ELF file address space or at runtime: <code>0x00000800</code> + application memory start). Note that line at address <code>800001e4</code> is loading the constant from address <code>800001f0</code>. This constant represents the offset into the GOT for the <code>lib_func</code> function pointer.</span> </figcaption>
+</figure>
+<div class="columns">
+    <figure class="code-figure"><div class="highlight" caption="GOT section before relocation. Notice how the GOT starts at `0x00000800` and our function pointer entry is at `0x00000850`"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>00000800 &lt;_got&gt;:
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>850:   00000000
+</span></span><span style="display:flex;"><span>...</span></span></code></pre></div>
+      <figcaption class="code-caption"><span>GOT section before relocation. Notice how the GOT starts at <code>0x00000800</code> and our function pointer entry is at <code>0x00000850</code></span> </figcaption>
+</figure>
+<figure class="code-figure"><div class="highlight" caption="GOT section after relocation. Now the function pointer entry actually points to the location of the `lib_func` code. This address is refers to a location in flash memory within the shared library that has `lib_func`."><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>00000800 &lt;_got&gt;:
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>850:   00044055
+</span></span><span style="display:flex;"><span>...</span></span></code></pre></div>
+      <figcaption class="code-caption"><span>GOT section after relocation. Now the function pointer entry actually points to the location of the <code>lib_func</code> code. This address is refers to a location in flash memory within the shared library that has <code>lib_func</code>.</span> </figcaption>
+</figure>
+
+</div>
+
+<p>With the function pointer workaround discussed earlier, Tockloader must add an extra level of indirection when performing the relocation. When calling a function via a function pointer, the code the compiler emits will first try to dereference the function pointer before jumping to the resulting address. This means that Tockloader cannot simply write the address of the function into the GOT entry. Instead, it must write the address of the function into another location and then write the address of that location into the GOT entry. This way, when the application dereferences the function pointer from the GOT, it will get the correct function address to jump to. In the implementation, Tockloader appends these function addresses to the end of the application binary and writes the address of these appended locations into the GOT entries.</p>
+<h2 id="runtime">Runtime</h2>
+<h3 id="tock-kernel">Tock Kernel</h3>
+<p>Shared libraries were chosen to closely match the format and layout of Tock applications. They already use the same TBF format, so the kernel can parse them and load them just the same as any other Tock application. When the kernel is loading shared libraries and applications from flash, the main difference is that it doesn&rsquo;t schedule shared libraries to be scheduled like normal applications are. To determine which entities are applications or shared libraries, it checks the shared library header of the TBF.</p>
+<p>Once the kernel loads an application which depends on a shared library, it allocates enough memory for the data sections of the shared library on top of the memory requested by the main application. The kernel also sets up the <a href="https://en.wikipedia.org/wiki/Memory_protection_unit">Memory Protection Unit (MPU)</a> accordingly with which shared library an application needs. <sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup> When an application is executing, it will have an MPU region allocated for every shared library it is using. This MPU region will have read and execute permissions to allow the application to jump into the sections of flash that contain the shared library text sections. When a context switch to another application occurs, the kernel already swaps out MPU regions.</p>
+<h3 id="libtock-c-and-crt0">libtock-c and crt0</h3>
+<p>Finally, the application startup <a href="https://en.wikipedia.org/wiki/Crt0">crt0</a> routine needed to be updated to support shared libraries. Recall from <a href="#setting-pic-base-register">earlier</a>, how libtock-c includes code which sets up the stack, PIC base register, GOT, data sections, and <a href="https://en.wikipedia.org/wiki/.bss">BSS</a> sections. crt0 needed to be modified to perform required setup for shared libraries.</p>
+<p>Just like for applications, crt0 needs to copy over the shared library GOT sections from the binary in flash to memory. To discover where the shared library exists in flash storage and where to copy the GOT/data sections to RAM, it gets some support from the kernel. I&rsquo;ve added a system call to the kernel which reports where a shared library binary exists in flash storage and where the kernel allocated the memory for the data section of a shared library for a given process. <a href="https://github.com/atar13/tock/blob/df3bce3153aee9d2f84a56480619809c9dd829c1/kernel/src/shared_library_lookup.rs#L23-L30">Here&rsquo;s the kernel implementation</a> and <a href="https://github.com/atar13/libtock-c/blob/2dad6471855757fe60094971acf8937ebbe38852/libtock/crt0.c#L348-L354">here&rsquo;s where crt0 invokes it</a>.</p>
+<figure class="code-figure"><div class="highlight" caption="Shared library lookup system call function header and explanation."><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#a5d6ff">/// - `0`: Driver existence check, always returns Ok(())
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#a5d6ff">/// - `1`: Get address of where a given shared library is located
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#a5d6ff">///        in flash. Expects `shlib_id` to be the shared library
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#a5d6ff">///        identifier. Returns the flash address in the success value.
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#a5d6ff">/// - `2`: Get memory location where a given shared library is
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#a5d6ff">///        loaded in RAM for the current process. Expects
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#a5d6ff">///        `shlib_id` to be the shared library identifier. Returns the
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#a5d6ff">///        RAM address in the success value.
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#ff7b72">fn</span> <span style="color:#d2a8ff;font-weight:bold">command</span>(<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">        </span><span style="color:#ff7b72;font-weight:bold">&amp;</span>self,<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">        </span>command_number: <span style="color:#ff7b72">usize</span>,<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">        </span>shlib_id: <span style="color:#ff7b72">usize</span>,<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">        </span>_: <span style="color:#ff7b72">usize</span>,<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">        </span>processid: <span style="color:#f0883e;font-weight:bold">ProcessId</span>,<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span>)<span style="color:#6e7681"> </span>-&gt; <span style="color:#f0883e;font-weight:bold">CommandReturn</span><span style="color:#6e7681"> </span>{</span></span></code></pre></div>
+      <figcaption class="code-caption"><span>Shared library lookup system call function header and explanation.</span> </figcaption>
+</figure>
+<p>Then, crt0 will read the first few bytes of the shared library in flash to read the shared library&rsquo;s <code>crt0_header</code> section. <code>crt0_header</code> is a header created by the linker script which is placed at the start of an application binary. The new linker script for shared libraries also creates a <code>crt0_header</code> which contains locations of sections such as the GOT, data and BSS within the shared library binary. Knowledge of these locations is useful for crt0 as it can know exactly where to fetch sections from the app binary in flash.</p>
+<figure class="code-figure">
+      <div class='no-highlight'>
+      <pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;" style="padding: 1rem; border-radius: 6px; overflow-x: auto;"><code class="language-text" data-lang="text">.crt0_header :
+{
+    /**
+     * Populate the header expected by `crt0`:
+     *
+     *  struct hdr {
+     *    uint32_t got_sym_start;
+     *    uint32_t got_start;
+     *    uint32_t got_size;
+     *    uint32_t data_sym_start;
+     *    uint32_t data_start;
+     *    uint32_t data_size;
+     *    uint32_t bss_start;
+     *    uint32_t bss_size;
+     *    uint32_t reldata_start;
+     *    uint32_t stack_size;
+     *  };
+     */
+    /* Offset of GOT symbols in flash from the start of the application
+     * binary. */
+    LONG(LOADADDR(.got) - ORIGIN(FLASH));
+    /* Offset of where the GOT section will be placed in memory from the
+     * beginning of the app&#39;s assigned memory. */
+    LONG(_got - ORIGIN(SRAM));
+    /* Size of GOT section. */
+    LONG(SIZEOF(.got));
+    /* Offset of data symbols in flash from the start of the application
+     * binary. */
+    LONG(LOADADDR(.data) - ORIGIN(FLASH));
+    /* Offset of where the data section will be placed in memory from the
+     * beginning of the app&#39;s assigned memory. */
+    LONG(_data - ORIGIN(SRAM));
+    /* Size of data section. */
+    LONG(SIZEOF(.data));
+    /* Offset of where the BSS section will be placed in memory from the
+     * beginning of the app&#39;s assigned memory. */
+    LONG(_bss - ORIGIN(SRAM));
+    /* Size of BSS section */
+    LONG(SIZEOF(.bss));
+    /* First address offset after program flash, where elf2tab places
+     * .rel.data section */
+    LONG(LOADADDR(.endflash) - ORIGIN(FLASH));
+    /* The size of the stack requested by this application */
+    LONG(0x00);
+} &gt; FLASH =0xFF</code></pre>
+      <div>
+      <figcaption class="code-caption"><span>Snippet from linker script which defines the contents of the <code>crt0_header</code></span> </figcaption>
+</figure>
+<p>In addition, it sets the shared library&rsquo;s separate PIC base register (e.g. <code>r10</code>) as outlined <a href="#reserving-a-shared-library-pic-base-register">here</a>. Since it just loaded where the shared library&rsquo;s GOT is in memory, it knows exactly what to set the PIC base register to.</p>
+<p>And that&rsquo;s it! That&rsquo;s an overview of the modifications made to Tock to support shared libraries. If you want to see the code you can find some links <a href="#source-code">here</a> in the walkthrough section.</p>
+<h1 id="key-findings">Key findings</h1>
+<p>This section summarizes the key findings of this work. Basically, here are two important things I discovered while doing this project (among many others which I&rsquo;ve been talking about). These two were just important enough to highlight here.</p>
+<h2 id="relocations-can-be-performed-at-flash-time">Relocations can be performed at flash-time</h2>
+<p>On embedded systems where you know exactly what processes are running on a board before it boots up, relocations can be performed while programs are flashed onto the board. If you know where shared libraries live in flash, then point the app there! This saves time at application startup, unlike traditional operating system which do all dynamic linking at runtime.</p>
+<h2 id="additional-compiler-support-is-needed-to-avoid-clobbering-pic-base-register">Additional compiler support is needed to avoid clobbering PIC base register</h2>
+<p>To avoid the workaround of using a separate PIC base register for the shared library&rsquo;s own GOT accesses, the compiler needs to support swapping between values of a single PIC base register. This could look like a routine on every shared library function call which pops the application&rsquo;s PIC base register, keeps it safe somewhere in memory, and sets the PIC base register to where the shared library&rsquo;s GOT is located. When the shared library function returns, the inverse operation is performed and the application&rsquo;s PIC base is restored. The &ldquo;Future Work&rdquo; section of <a href="https://atarbinian.com/ms-thesis/">the thesis</a> talks about this and other compiler modifications in much more detail.</p>
+<h2 id="walkthrough">Walkthrough</h2>
+<p>Enough talking. Let&rsquo;s actually flash this stuff onto a board and see an application call into a shared library.</p>
+<h3 id="source-code">Source Code</h3>
+<p>You&rsquo;ll need to grab a checkout of the Tock related projects I&rsquo;ve been talking about which have the necessary modifications to support shared libraries. <strong>Make sure to checkout the <code>shared-libaries</code> branch of each of the projects from each of the repositories linked below:</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th>Project</th>
+          <th>Description</th>
+          <th>Link</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Tock</td>
+          <td>the kernel itself</td>
+          <td><a href="https://github.com/atar13/tock/tree/shared-libraries">github.com/atar13/tock/tree/shared-libraries</a></td>
+      </tr>
+      <tr>
+          <td>libtock-c</td>
+          <td>application runtime and build infrastructure</td>
+          <td><a href="https://github.com/atar13/libtock-c/tree/shared-libraries">github.com/atar13/libtock-c/tree/shared-libraries</a></td>
+      </tr>
+      <tr>
+          <td>elf2tab</td>
+          <td>combines multiple architecture specific ELF binaries into one fat binary (TAB)</td>
+          <td><a href="https://github.com/atar13/elf2tab/tree/shared-libraries">github.com/atar13/elf2tab/tree/shared-libraries</a></td>
+      </tr>
+      <tr>
+          <td>Tockloader</td>
+          <td>flashes the kernel/apps onto physical hardware (and performs shared library function relocations for this project)</td>
+          <td><a href="https://github.com/atar13/tockloader/tree/shared-libraries">github.com/atar13/tockloader/tree/shared-libraries</a></td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="hardware-dependencies">Hardware Dependencies</h3>
+<p>This walkthrough assumes you have a <a href="https://www.nordicsemi.com/Products/Development-hardware/nRF52840-DK">nRF52840DK</a>. However, this should would work with any ARM board that Tock supports. See the <a href="https://github.com/tock/tock/tree/master/boards">/boards/</a> directory in the Tock kernel repo for all the supported boards.</p>
+<figure class="centered"><img src="/blog/shared-libraries/nrf52840dk.png"
+    alt="nrf52840DK board" width="70%"><figcaption>
+      <p>nrf52840DK board</p>
+    </figcaption>
+</figure>
+
+<h3 id="software-dependencies">Software Dependencies</h3>
+<p>Each Tock project&rsquo;s <code>README.md</code> will have the most accurate setup information. <a href="https://github.com/tock/tock/blob/master/doc/Getting_Started.md">Here</a> is a page which outlines some of the necessary tools for working with Tock.</p>
+<h4 id="nix">Nix</h4>
+<p><del>How could I go this far without mentioning Nix?</del> If you use the Nix package manager, you can quickly get setup with each project&rsquo;s respective dependencies. You can use the provided <code>shell.nix</code> and <code>flake.nix</code> files in the root of each repository to enter a shell with the necessary dependencies. For example, to enter a shell with the dependencies for libtock-c, run <code>nix-shell</code> in the root of the libtock-c repository. If you’re familiar with Nix flakes, Tockloader and elf2tab have a <code>flake.nix</code> file which can be used to enter a shell with pinned versions of dependencies via running <code>nix develop</code> in the root of the repository. If the shell fails to build, grab a new <code>shell.nix</code> from the upstream repository since my fork&rsquo;s version might become out of date.</p>
+<h3 id="building-and-flashing-the-tock-kernel">Building and flashing the Tock kernel</h3>
+<p>Clone the fork of the Tock kernel from <a href="github.com/atar13/tock/tree/shared-libraries">github.com/atar13/tock/tree/shared-libraries</a> and set your current directory as the root directory of the project.</p>
+<p>Run the following commands to build the modified Tock kernel and flash it onto the Nordic nRF52840DK board. The <code>make flash</code> command assumes you have <code>tockloader</code> available in your shell (in a directory in your <a href="https://bash.cyberciti.biz/guide/$PATH"><code>PATH</code></a> environment variable). Flashing the kernel doesn’t require a modified version of <code>tockloader</code> unlike when flashing applications and shared libraries (as we will see very shortly). So, you can use an existing <code>tockloader</code> from <code>pip</code> (as the kernel&rsquo;s <code>README.md</code> points to).</p>
+<figure class="code-figure"><div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>cd boards/nordic/nrf52840dk 
+</span></span><span style="display:flex;"><span>make flash </span></span></code></pre></div>
+</figure>
+<p>If you run into permission issues when flashing the board, it’s likely that you don’t have permission to access your serial port. On Linux, make sure your user is a member of the <code>dialout</code> group. Once the kernel is flashed, run <code>tockloader listen</code> to verify it is running. If the kernel is up and running, you should see the following console prompt. Type <code>help</code> + the Return key to see the available commands.</p>
+<figure class="code-figure">
+      <div class='no-highlight'>
+      <pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;" style="padding: 1rem; border-radius: 6px; overflow-x: auto;"><code class="language-text" data-lang="text">tock$</code></pre>
+      <div>
+</figure>
+<p>First step done. We have the Tock kernel running on our board with no apps. Let&rsquo;s change that.</p>
+<h3 id="building-a-shared-library">Building a shared library</h3>
+<p>Clone the fork of libtock-c from <a href="https://github.com/atar13/libtock-c/tree/shared-libraries">github.com/atar13/libtock-c/tree/shared-libraries</a> and set your current directory as the root directory of the project. Compile the sample shared library to produce <code>libtest.so</code> (which can be found in <code>libtest/build/cortex-m4/libtest</code> after building).</p>
+<figure class="code-figure"><div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>cd libtest
+</span></span><span style="display:flex;"><span>make</span></span></code></pre></div>
+</figure>
+<p>The source code of the shared library is relatively simple and contains one function (<code>lib_func</code>) which is defined as such (found at <code>libtest/lib.c</code>).</p>
+<figure class="code-figure"><div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#include</span> <span style="color:#8b949e;font-weight:bold;font-style:italic">&#34;lib.h&#34;</span><span style="color:#8b949e;font-weight:bold;font-style:italic">
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">int</span> glob <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">42</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">int</span> <span style="color:#d2a8ff;font-weight:bold">lib_func</span>(<span style="color:#ff7b72">int</span> x)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">return</span> x <span style="color:#ff7b72;font-weight:bold">+</span> glob;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+</figure>
+<h3 id="building-an-application">Building an application</h3>
+<p>We will compile the sample application which makes a call to our shared library function (lib func) and prints the result.</p>
+<figure class="code-figure"><div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#ff7b72">int</span> glob <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">42</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">int</span> <span style="color:#d2a8ff;font-weight:bold">lib_func</span>(<span style="color:#ff7b72">int</span> x) {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">return</span> x <span style="color:#ff7b72;font-weight:bold">+</span> glob;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+</figure>
+<p>Set your current directory to the root of the libtock c repository and run the following commands.</p>
+<figure class="code-figure"><div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>cd examples/shlib_app
+</span></span><span style="display:flex;"><span>make</span></span></code></pre></div>
+</figure>
+<p>Here is the source code of the sample application(found at <code>examples/shlib app/main.c</code>). To keep this demo simple, the <code>printf</code> and <code>libtocksync_alarm_delay_ms</code> functions are statically linked into the application binary.</p>
+<figure class="code-figure"><div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#ff7b72">int</span> app_glob <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">10</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">int</span> <span style="color:#d2a8ff;font-weight:bold">main</span>(<span style="color:#ff7b72">void</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">while</span> (<span style="color:#a5d6ff">1</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> result <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#d2a8ff;font-weight:bold">lib_func</span>(app_glob);
+</span></span><span style="display:flex;"><span>        <span style="color:#d2a8ff;font-weight:bold">printf</span>(<span style="color:#a5d6ff">&#34;lib_func(%d) = %d</span><span style="color:#79c0ff">\n</span><span style="color:#a5d6ff">&#34;</span>, app_glob, result);
+</span></span><span style="display:flex;"><span>        <span style="color:#d2a8ff;font-weight:bold">libtocksync_alarm_delay_ms</span>(<span style="color:#a5d6ff">1000</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+</figure>
+<p>If you want to inspect the assembly generated by the compiler, feel free to <code>objdump</code> the application ELF binary.</p>
+<figure class="code-figure"><div class="highlight" caption="arm-none-eabi-objdump -D -marm examples/shlib_app/build/cortex-m4/cortex-m4.elf" verbatim="true"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 1</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 2</span><span>800001c4 &lt;main&gt;:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 3</span><span>800001c4:       b538            push    {r3, r4, r5, lr}
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 4</span><span>800001c6:       4b0a            ldr     r3, [pc, #40]   @ (800001f0 &lt;main+0x2c&gt;)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 5</span><span>800001c8:       f859 4003       ldr.w   r4, [r9, r3]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 6</span><span>800001cc:       4b09            ldr     r3, [pc, #36]   @ (800001f4 &lt;main+0x30&gt;)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 7</span><span>800001ce:       f859 5003       ldr.w   r5, [r9, r3]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 8</span><span>800001d2:       682b            ldr     r3, [r5, #0]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681"> 9</span><span>800001d4:       6820            ldr     r0, [r4, #0]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">10</span><span>800001d6:       4798            blx     r3
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">11</span><span>800001d8:       4b07            ldr     r3, [pc, #28]   @ (800001f8 &lt;main+0x34&gt;)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">12</span><span>800001da:       6821            ldr     r1, [r4, #0]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">13</span><span>800001dc:       4602            mov     r2, r0
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">14</span><span>800001de:       f859 0003       ldr.w   r0, [r9, r3]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">15</span><span>800001e2:       f000 fa55       bl      80000690 &lt;iprintf&gt;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">16</span><span>800001e6:       f44f 707a       mov.w   r0, #1000       @ 0x3e8
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">17</span><span>800001ea:       f000 fa0b       bl      80000604 &lt;libtocksync_alarm_delay_ms&gt;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">18</span><span>800001ee:       e7f0            b.n     800001d2 &lt;main+0xe&gt;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">19</span><span>800001f0:       000000a0        andeq   r0, r0, r0, lsr #1
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">20</span><span>800001f4:       00000090        muleq   r0, r0, r0
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681">21</span><span>800001f8:       00000000        andeq   r0, r0, r0</span></span></code></pre></div>
+      <figcaption class="code-caption"><span style="font-family:monospace;">arm-none-eabi-objdump -D -marm examples/shlib_app/build/cortex-m4/cortex-m4.elf</span> </figcaption>
+</figure>
+<h3 id="create-shared-library-tab-file">Create shared library TAB file</h3>
+<p>Clone the fork of elf2tab from <a href="https://github.com/atar13/libtock-c/tree/shared-libraries">github.com/atar13/libtock-c/tree/shared-libraries</a> and set your current directory as the root directory of the project. The following commands build the modified version of <code>elf2tab</code>.</p>
+<figure class="code-figure"><div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>cargo build --release</span></span></code></pre></div>
+</figure>
+<p>Now, use it to create a TAB file from the shared library ELF file that was built earlier. Make sure to update the path to the <code>libtest.so</code> file. The provided command assumes <code>libtest.so</code> is in the
+build directory of <code>libtock-c/libtest</code> and that libtock-c is adjacent to the elf2tab folder. Alternatively, the same command is provided in the script: <code>./elf2tab_shared_library.sh</code>.</p>
+<figure class="code-figure"><div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>./target/release/elf2tab -n libtest --stack <span style="color:#a5d6ff">2048</span> --app-heap <span style="color:#a5d6ff">1024</span> --kernel-heap <span style="color:#a5d6ff">1024</span> --kernel-major <span style="color:#a5d6ff">2</span> --kernel-minor <span style="color:#a5d6ff">0</span> --minimum-footer-size <span style="color:#a5d6ff">3000</span> -v -o libtest.tab ../libtock-c/libtest/build/cortex-m4/libtest.so</span></span></code></pre></div>
+</figure>
+<h3 id="create-application-tab-file">Create application TAB file</h3>
+<p>Like the previous step, elf2tab will generate a TAB file from the application ELF file. Note that this command requires the <code>--shared_library_deps</code> option to point to the shared library binary (<code>.so</code> file). Alternatively, the same command is provided in the script:
+<code>./elf2tab_application.sh</code>.</p>
+<figure class="code-figure"><div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>./target/release/elf2tab -n shlib_app --stack <span style="color:#a5d6ff">2048</span> --app-heap <span style="color:#a5d6ff">1024</span> --kernel-heap <span style="color:#a5d6ff">1024</span> --kernel-major <span style="color:#a5d6ff">2</span> --kernel-minor <span style="color:#a5d6ff">0</span> --minimum-footer-size <span style="color:#a5d6ff">3000</span> --shared_library_deps ../libtock-c/libtest/build/cortex-m4/libtest.so -v -o shlib_app.tab ../libtock-c/examples/shlib_app/build/cortex-m4/cortex-m4.elf</span></span></code></pre></div>
+</figure>
+<p>To see the relocation TOML file which elf2tab generates, run the following commands to extract it from the TAB:</p>
+<figure class="code-figure"><div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>mkdir shlib_app_extracted
+</span></span><span style="display:flex;"><span>tar xvf shlib_app.tab --directory shlib_app_extracted
+</span></span><span style="display:flex;"><span>cat shlib_app_extracted/cortex-m4-reloc.toml</span></span></code></pre></div>
+</figure>
+<figure class="code-figure"><div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>[lib_func]
+</span></span><span style="display:flex;"><span>app_name = &#34;shlib_app&#34;
+</span></span><span style="display:flex;"><span>app_got_addr = 0x2118
+</span></span><span style="display:flex;"><span>lib_name = &#34;libtest&#34;
+</span></span><span style="display:flex;"><span>lib_func_offset = 0x800001ad</span></span></code></pre></div>
+</figure>
+<h3 id="flash-shared-library-to-board">Flash Shared Library to board</h3>
+<p>Clone the fork of Tockloader from <a href="https://github.com/atar13/tockloader/tree/shared-libraries">github.com/atar13/tockloader/tree/shared-libraries</a> and set your current directory as the root directory of the project. Be sure that you use this modified version of Tockloader and not the standard release of Tockloader which may be in your shell’s PATH after installing with <code>pip</code>/<code>pipx</code>. Like the commands before, the following command assumes your clone of Tockloader is adjacent to elf2tab.</p>
+<figure class="code-figure"><div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>python3 -m tockloader.main install ../elf2tab/libtest.tab
+</span></span><span style="display:flex;"><span>Verify the shared library has been flashed by running:
+</span></span><span style="display:flex;"><span>python3 -m tockloader.main list</span></span></code></pre></div>
+</figure>
+<p>There should be an entry for the shared library that looks this:</p>
+<figure class="code-figure">
+      <div class='no-highlight'>
+      <pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;" style="padding: 1rem; border-radius: 6px; overflow-x: auto;"><code class="language-text" data-lang="text">┌──────────────────────────────────────────────────┐
+│ Shared Library 0                                 |
+└──────────────────────────────────────────────────┘
+  Name:                  libtest
+  Version:               0
+  Enabled:               True
+  Sticky:                False
+  Total Size in Flash:   4096 bytes</code></pre>
+      <div>
+</figure>
+<h3 id="flash-application-to-board">Flash Application to board</h3>
+<p>Similar to the previous step, we will use Tockloader to flash the application which depends on the shared library.</p>
+<figure class="code-figure"><div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>python3 -m tockloader.main install ../elf2tab/shlib_app.tab</span></span></code></pre></div>
+</figure>
+<p>Again, verify the application has been flashed by running:</p>
+<figure class="code-figure"><div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>python3 -m tockloader.main list</span></span></code></pre></div>
+</figure>
+<p>There should be an entry for the application that looks like this:</p>
+<figure class="code-figure"><div class="highlight" caption="python3 -m tockloader.main list" verbatim="true"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>┌──────────────────────────────────────────────────┐
+</span></span><span style="display:flex;"><span>│ App 0                                            |
+</span></span><span style="display:flex;"><span>└──────────────────────────────────────────────────┘
+</span></span><span style="display:flex;"><span>  Name:                  shlib_app
+</span></span><span style="display:flex;"><span>  Version:               0
+</span></span><span style="display:flex;"><span>  Enabled:               True
+</span></span><span style="display:flex;"><span>  Sticky:                False
+</span></span><span style="display:flex;"><span>  Total Size in Flash:   16384 bytes</span></span></code></pre></div>
+      <figcaption class="code-caption"><span style="font-family:monospace;">python3 -m tockloader.main list</span> </figcaption>
+</figure>
+<h3 id="verify-application-output">Verify application output</h3>
+<p>Finally, use <code>tockloader</code> to connect to the board&rsquo;s serial output and verify the application is running and correctly calling into the shared library.</p>
+<figure class="code-figure"><div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>python3 -m tockloader.main listen</span></span></code></pre></div>
+</figure>
+<figure class="code-figure"><div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>lib_func(10) = 52
+</span></span><span style="display:flex;"><span>lib_func(10) = 52
+</span></span><span style="display:flex;"><span>lib_func(10) = 52
+</span></span><span style="display:flex;"><span>...</span></span></code></pre></div>
+</figure>
+<p>Recall from the example application code, that the shared library function lib_func adds 42 to its argument. Since the application is passing in 10, the expected result is 52. So, it looks like our library call is working!</p>
+<p>Feel free to modify the application and shared library code to experiment with different function calls and arguments. Just remember to rebuild the shared library and application, create new TAB files, and re-flash them onto the board.</p>
+<h2 id="debugging">Debugging</h2>
+<p>If you start hacking on this, you need to know what to do when the board panics, because it will happen (many times).</p>
+<p>Thankfully, Tock has a great panic debug screen which helps a ton.</p>
+<p>If the board seems unresponsive (i.e. no print statements showing up in serial logs). Hit the reset button and see if you see a panic message from Tock.</p>
+<p>It should look something like this:</p>
+<figure class="code-figure"><div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>panicked at kernel/src/shared_library_lookup.rs:38:9:
+</span></span><span style="display:flex;"><span>explicit panic
+</span></span><span style="display:flex;"><span>	Kernel version release-2.2-rc1-153-gdf3bce315
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>---| Cortex-M Fault Status |---
+</span></span><span style="display:flex;"><span>No Cortex-M faults detected.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>---| App Status |---
+</span></span><span style="display:flex;"><span>𝐀𝐩𝐩: shlib_app   -   [Running]
+</span></span><span style="display:flex;"><span> Events Queued: 0   Syscall Count: 4   Dropped Upcall Count: 0
+</span></span><span style="display:flex;"><span> Restart Count: 0
+</span></span><span style="display:flex;"><span> Last Syscall: Command { driver_number: 65537, subdriver_number: 1, arg0: 0, arg1: 0 }
+</span></span><span style="display:flex;"><span> Completion Code: None
+</span></span><span style="display:flex;"><span>Shared library starts at 0x2000C870</span></span></code></pre></div>
+</figure>
+<p>Great! Now we have a starting point to figure out what went wrong.</p>
+<p>If you panic in the kernel, no sweat. Tock will print out the exact line of Rust code which caused the panic.</p>
+<p>In the example above it&rsquo;s at line 38 of <code>kernel/src/shared_library_lookup.rs</code>.</p>
+<p>If you panic in userspace, things get a little trickier&hellip;</p>
+<h3 id="process-had-a-fault">Process had a fault</h3>
+<p>In the huge panic debug output, find the address where the process faulted at</p>
+<figure class="code-figure"><div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>---| Cortex-M Fault Status |---
+</span></span><span style="display:flex;"><span>Precise Data Bus Error:             true
+</span></span><span style="display:flex;"><span>Forced Hard Fault:                  true
+</span></span><span style="display:flex;"><span>Bus Fault Address:                  0xE000EDFC
+</span></span><span style="display:flex;"><span>Fault Status Register (CFSR):       0x00008200
+</span></span><span style="display:flex;"><span>Hard Fault Status Register (HFSR):  0x40000000</span></span></code></pre></div>
+</figure>
+<figure class="code-figure"><div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>  R0 : 0x0004005C    R6 : 0x0004005C
+</span></span><span style="display:flex;"><span>  R1 : 0x2000A000    R7 : 0x2000A000
+</span></span><span style="display:flex;"><span>  R2 : 0x00004000    R8 : 0x00000000
+</span></span><span style="display:flex;"><span>  R3 : 0xE000ED00    R10: 0x00000000
+</span></span><span style="display:flex;"><span>  R4 : 0x0004005C    R11: 0x00000000
+</span></span><span style="display:flex;"><span>  R5 : 0x00000000    R12: 0xD80EC4C2
+</span></span><span style="display:flex;"><span>  R9 : 0x2000A800 (Static Base Register)
+</span></span><span style="display:flex;"><span>  SP : 0x2000A7B8 (Process Stack Pointer)
+</span></span><span style="display:flex;"><span>  LR : 0x000402DD
+</span></span><span style="display:flex;"><span>  PC : 0x000402A2
+</span></span><span style="display:flex;"><span> YPC : 0x00040230</span></span></code></pre></div>
+</figure>
+<p>Ok, based on the PC register (<a href="https://en.wikipedia.org/wiki/Program_counter">program counter</a>) we have the instruction where the process faulted. Let&rsquo;s go find what this instruction means.</p>
+<p>The kernel told us the shared library code was found in flash at address 0x00044000 from the following debug statement when the board panicked. (This debug statement is part of my modified crt0 header, so you might not have it.</p>
+<figure class="code-figure"><div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Shared Library in flash=0x00044000-0x00044FFF process=&#34;libtest&#34;</span></span></code></pre></div>
+</figure>
+<p>We can use tockloader to dump the contents of flash at this address. Tockloader doesn&rsquo;t have an interface for dumping at a specific address so we can specify the page number.</p>
+<figure class="code-figure"><div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>tockloader dump-page <span style="color:#a5d6ff">64</span></span></span></code></pre></div>
+</figure>
+<p>Adjust the page number if the addresess printed out on the left aren&rsquo;t correct.</p>
+<p>This line contains the address of the PC when the fault ocurred.</p>
+<figure class="code-figure">
+      <div class='no-highlight'>
+      <pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;" style="padding: 1rem; border-radius: 6px; overflow-x: auto;"><code class="language-text" data-lang="text">000402a0  09 4b d3 f8 fc 20 d2 01  5e bf d3 f8 fc 20 42 f0  |.K... ..^.... B.|</code></pre>
+      <div>
+</figure>
+<p>000402a2 is the third byte here (d3).</p>
+<p>One way to interpret the instruction is to find the same pattern of bytes in the binary (it&rsquo;s not the most exact approach but it gets the job done). This is from <a href="https://github.com/sharkdp/hexyl">hexyl</a>, which is a fantastic hex dump program. <sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup></p>
+<figure class="code-figure"><div class="highlight" caption="hexyl libtest/build/cortex-m4/libtest.so" verbatim="true"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>│00001240│ 04 00 00 00 09 4b d3 f8 ┊ fc 20 d2 01 5e bf d3 f8 │•⋄⋄⋄_K××┊× ×•^×××│</span></span></code></pre></div>
+      <figcaption class="code-caption"><span style="font-family:monospace;">hexyl libtest/build/cortex-m4/libtest.so</span> </figcaption>
+</figure>
+<p>Then, you can use <code>objdump</code> with <code>-D</code> to match up these bytes to the human-readable (ish) assembly (or skip <code>hexyl</code>_. In <code>objdump</code>, the leftmost column contains the address location, the second columns contain the bytes themselves, and the third column has the assembly. Beware, that the bytes in the second column are in the opposite order as shown in <code>tockloader dump-page</code> and <code>hexyl</code> (hence why I suggested starting in <code>hexyl</code> instead of going straight to <code>objdump</code>). So, in this example, if we&rsquo;re looking for the crashing instruction at <code>000402a2</code> in flash, the data in flash looks like <code>d3 f8</code>, but might show up in <code>objdump</code> as the bytes <code>f8d3</code>.</p>
+<p>Ok, now we know where our code is crashing. Now, the hard part, figuring out why its crashing. Feel free to inspect any registers based on the register report from earlier. Think about what the crashing assembly is doing and what each register should look like. If it&rsquo;s helpful, you can print out variables in your code such as the addresses during the setup that crt0 performs (if your <code>printf</code> is working&hellip; wait for the next section). NOTE, any changes made to crt0.c require a recompile of the libtock library (currently a static library). <code>cd libtock &amp;&amp; make</code>.</p>
+<h3 id="dirty-debugging">Dirty Debugging</h3>
+<p>When you don&rsquo;t have <code>printf</code>, make the kernel print it for you via syscall:</p>
+<figure class="code-figure"><div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>  <span style="color:#ff7b72">volatile</span> <span style="color:#ff7b72">uint32_t</span> x <span style="color:#ff7b72;font-weight:bold">=</span> (<span style="color:#ff7b72">uint32_t</span>)(myhdr<span style="color:#ff7b72;font-weight:bold">-&gt;</span>reldata_start);
+</span></span><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#if defined(__thumb__)
+</span></span></span><span style="display:flex;"><span>    <span style="color:#8b949e;font-style:italic">// uncomment this to print a register!
+</span></span></span><span style="display:flex;"><span>    <span style="color:#8b949e;font-style:italic">// &#34;mov r0, r10\n&#34;
+</span></span></span><span style="display:flex;"><span>  __asm__ <span style="color:#d2a8ff;font-weight:bold">volatile</span> (
+</span></span><span style="display:flex;"><span>    <span style="color:#a5d6ff">&#34;mov r0, %[debug]</span><span style="color:#79c0ff">\n</span><span style="color:#a5d6ff">&#34;</span> <span style="color:#ff7b72;font-weight:bold">:</span> [debug] <span style="color:#a5d6ff">&#34;+r&#34;</span> (x)
+</span></span><span style="display:flex;"><span>  );
+</span></span><span style="display:flex;"><span>  __asm__ <span style="color:#d2a8ff;font-weight:bold">volatile</span> (
+</span></span><span style="display:flex;"><span>    <span style="color:#a5d6ff">&#34;svc 23</span><span style="color:#79c0ff">\n</span><span style="color:#a5d6ff">&#34;</span>
+</span></span><span style="display:flex;"><span>  );
+</span></span><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#endif</span></span></span></code></pre></div>
+</figure>
+<p>And then apply this diff to the kernel to panic on any system call and print out <code>r0</code>. Not the most elegant, but it works&hellip;</p>
+<figure class="code-figure"><div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-diff" data-lang="diff"><span style="display:flex;"><span><span style="color:#79c0ff;font-weight:bold">diff --git a/arch/cortex-m/src/syscall.rs b/arch/cortex-m/src/syscall.rs
+</span></span></span><span style="display:flex;"><span><span style="color:#79c0ff;font-weight:bold">index ea88cd98c..62e6bd2ef 100644
+</span></span></span><span style="display:flex;"><span><span style="color:#ffa198;background-color:#490202">--- a/arch/cortex-m/src/syscall.rs
+</span></span></span><span style="display:flex;"><span><span style="color:#56d364;background-color:#0f5323">+++ b/arch/cortex-m/src/syscall.rs
+</span></span></span><span style="display:flex;"><span><span style="color:#79c0ff">@@ -10,6 +10,7 @@ use core::marker::PhantomData;
+</span></span></span><span style="display:flex;"><span> use core::mem::{self, size_of};
+</span></span><span style="display:flex;"><span> use core::ops::Range;
+</span></span><span style="display:flex;"><span> use core::ptr::{self, addr_of, addr_of_mut, read_volatile, write_volatile};
+</span></span><span style="display:flex;"><span><span style="color:#56d364;background-color:#0f5323">+use kernel::debug;
+</span></span></span><span style="display:flex;"><span> use kernel::errorcode::ErrorCode;
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span> use crate::CortexMVariant;
+</span></span><span style="display:flex;"><span><span style="color:#79c0ff">@@ -318,6 +319,11 @@ impl&lt;A: CortexMVariant&gt; kernel::syscall::UserspaceKernelBoundary for SysCall&lt;A&gt;
+</span></span></span><span style="display:flex;"><span>                 r3.into(),
+</span></span><span style="display:flex;"><span>             );
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#56d364;background-color:#0f5323">+            if syscall.is_none() {
+</span></span></span><span style="display:flex;"><span><span style="color:#56d364;background-color:#0f5323">+                panic!(&#34;app made syscall with num {} and r0 of 0x{:08x}&#34;, svc_num, r0);
+</span></span></span><span style="display:flex;"><span><span style="color:#56d364;background-color:#0f5323">+            }
+</span></span></span><span style="display:flex;"><span><span style="color:#56d364;background-color:#0f5323">+
+</span></span></span><span style="display:flex;"><span>             match syscall {
+</span></span><span style="display:flex;"><span>                 Some(s) =&gt; kernel::syscall::ContextSwitchReason::SyscallFired { syscall: s },
+</span></span><span style="display:flex;"><span>                 None =&gt; kernel::syscall::ContextSwitchReason::Fault,
+</span></span></code></pre></div>
+</figure>
+<h3 id="print-out-all-the-memory">Print out all the memory</h3>
+<p>Throughout this project, I needed to print out lots of memory dumps. Here&rsquo;s a snippet in Rust for the kernel:</p>
+<figure class="code-figure"><div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#ff7b72">for</span><span style="color:#6e7681"> </span>i<span style="color:#6e7681"> </span><span style="color:#ff7b72">in</span><span style="color:#6e7681"> </span>(<span style="color:#a5d6ff">0</span><span style="color:#ff7b72;font-weight:bold">..</span>rel_data.len()<span style="color:#6e7681"> </span><span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#6e7681"> </span><span style="color:#a5d6ff">1</span>).step_by(<span style="color:#a5d6ff">16</span>)<span style="color:#6e7681"> </span>{<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">	</span><span style="color:#d2a8ff;font-weight:bold">print!</span>(<span style="color:#a5d6ff">&#34;0x:</span><span style="color:#a5d6ff">{:08X}</span><span style="color:#a5d6ff">&#34;</span>,<span style="color:#6e7681"> </span>i);<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">	</span><span style="color:#ff7b72">for</span><span style="color:#6e7681"> </span>j<span style="color:#6e7681"> </span><span style="color:#ff7b72">in</span><span style="color:#6e7681"> </span>i<span style="color:#ff7b72;font-weight:bold">..</span>(<span style="color:#a5d6ff">16</span><span style="color:#6e7681"> </span><span style="color:#ff7b72;font-weight:bold">+</span><span style="color:#6e7681"> </span>i)<span style="color:#6e7681"> </span>{<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">		</span><span style="color:#ff7b72">if</span><span style="color:#6e7681"> </span>j<span style="color:#6e7681"> </span><span style="color:#ff7b72;font-weight:bold">&gt;</span><span style="color:#6e7681"> </span>rel_data.len()<span style="color:#6e7681"> </span><span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#6e7681"> </span><span style="color:#a5d6ff">1</span><span style="color:#6e7681">  </span>{<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">			</span><span style="color:#ff7b72">break</span>;<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">		</span>}<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">		</span><span style="color:#d2a8ff;font-weight:bold">print!</span>(<span style="color:#a5d6ff">&#34; </span><span style="color:#a5d6ff">{:02X}</span><span style="color:#a5d6ff"> &#34;</span>,<span style="color:#6e7681"> </span>rel_data[j]);<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">	</span>}<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">	</span><span style="color:#d2a8ff;font-weight:bold">println!</span>();<span style="color:#6e7681">
+</span></span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+</figure>
+<p>And one in Python for Tockloader:</p>
+<figure class="code-figure"><div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff7b72">def</span> <span style="color:#d2a8ff;font-weight:bold">print_bytes</span>(buf):
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">for</span> i <span style="color:#ff7b72;font-weight:bold">in</span> range(<span style="color:#a5d6ff">0</span>, len(buf), <span style="color:#a5d6ff">16</span>):
+</span></span><span style="display:flex;"><span>		print(<span style="color:#79c0ff">f</span><span style="color:#a5d6ff">&#34;0x</span><span style="color:#a5d6ff">{</span>i<span style="color:#a5d6ff">:</span><span style="color:#a5d6ff">08X</span><span style="color:#a5d6ff">}</span><span style="color:#a5d6ff">:&#34;</span>, end<span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">&#34;&#34;</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#ff7b72">for</span> j <span style="color:#ff7b72;font-weight:bold">in</span> range(i,(<span style="color:#a5d6ff">16</span> <span style="color:#ff7b72;font-weight:bold">+</span> i)):
+</span></span><span style="display:flex;"><span>			<span style="color:#ff7b72">if</span> j <span style="color:#ff7b72;font-weight:bold">&gt;</span> len(buf) <span style="color:#ff7b72;font-weight:bold">-</span> <span style="color:#a5d6ff">1</span>:
+</span></span><span style="display:flex;"><span>				<span style="color:#ff7b72">break</span>;
+</span></span><span style="display:flex;"><span>			print(<span style="color:#79c0ff">f</span><span style="color:#a5d6ff">&#34; </span><span style="color:#a5d6ff">{</span>buf[j]<span style="color:#a5d6ff">:</span><span style="color:#a5d6ff">02X</span><span style="color:#a5d6ff">}</span><span style="color:#a5d6ff"> &#34;</span>, end<span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">&#34;&#34;</span>)
+</span></span><span style="display:flex;"><span>		print()</span></span></code></pre></div>
+</figure>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>This whole section is heavily inspired by <a href="https://eli.thegreenplace.net/2011/11/03/position-independent-code-pic-in-shared-libraries/">this incredible blog post</a> by Eli Bendersky.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>I will be referring to flash storage/memory and normal memory (aka RAM) and it&rsquo;s important to know the difference between the two. <a href="https://en.wikipedia.org/wiki/Flash_memory">Flash storage/memory</a> is persistent storage commonly used for embedded devices. Think of an SD card for a camera or USB &ldquo;flash&rdquo; drive, but on the board of an embedded device. One relevant use of flash is storing executable programs. In fact, many embedded systems execute code directly from flash without loading it into main memory. <a href="https://en.wikipedia.org/wiki/Random-access_memory">Memory (aka RAM)</a> is not persistent. Anytime, the power goes off you lose the data. This is used for any variables during the program&rsquo;s execution (global, static, local, etc).&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p>This assumption doesn&rsquo;t hold up as well with the <a href="https://github.com/tock/tock/pull/3941">addition of dynamic application loading</a>, but we won&rsquo;t consider that for this project)&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4">
+<p>The <a href="https://en.wikipedia.org/wiki/Memory_protection_unit">MPU</a> is a piece of hardware which enforces memory isolation. Think of how on a traditional operating system, you can&rsquo;t access the memory of an another process. The MPU provides that functionality for embedded systems which lack a traditional <a href="https://en.wikipedia.org/wiki/Memory_management_unit">MMU</a>. Tock configures the MPU to restrict processes from accessing memory not allocated to them.&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:5">
+<p>As great hexyl as is, after working on this project I got very tired of staring at hex dumps&hellip;&#160;<a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+  </div>
+
+  </main>
+  <footer>
+    <div id="footer">
+    <nav aria-label="upbring webring" class="flex items-center gap-x-4">
+        <a class="hover:text-global-text hover:underline" href="https://kytrinh.me/ringfairy/atarbinian/previous">←</a>
+        <a class="hover:text-global-text hover:underline" href="https://kytrinh.me/ringfairy/">upbring</a>
+        <a class="hover:text-global-text hover:underline" href="https://kytrinh.me/ringfairy/atarbinian/next">→</a>
+    </nav>
+    <nav aria-label="gathering webring" class="flex items-center gap-x-4">
+        <a class="hover:text-global-text hover:underline" href="https://kytrinh.me/gathering/atarbinian/previous">←</a>
+        <a class="hover:text-global-text hover:underline" href="https://kytrinh.me/gathering/">gathering</a>
+        <a class="hover:text-global-text hover:underline" href="https://kytrinh.me/gathering/atarbinian/next">→</a>
+    </nav>
+    <div id="footer-links">
+        <a href="https://github.com/atar13/atarbinian.com">Source Code</a>
+        <img src="" alt="Made With Hugo"></img>
+        <p>Copyright 2026. All rights reserved.</p>
+    </div>
+</div>
+
+  </footer>
+</body>
+</html>

@@ -2,42 +2,47 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://example.org/blog/post-1/</loc>
+    <loc>https://atarbinian.com/blog/shared-libraries-for-embedded-operating-systems/</loc>
+    <lastmod>2026-06-28T22:00:00-07:00</lastmod>
+  </url><url>
+    <loc>https://atarbinian.com/blog/post-1/</loc>
     <lastmod>2025-03-07T09:00:00-07:00</lastmod>
   </url><url>
-    <loc>https://example.org/</loc>
+    <loc>https://atarbinian.com/</loc>
     <lastmod>2025-03-07T08:00:00-07:00</lastmod>
   </url><url>
-    <loc>https://example.org/blog/</loc>
+    <loc>https://atarbinian.com/blog/</loc>
     <lastmod>2023-01-01T08:30:00-07:00</lastmod>
   </url><url>
-    <loc>https://example.org/cv/</loc>
+    <loc>https://atarbinian.com/cv/</loc>
     <lastmod>2023-01-01T08:30:00-07:00</lastmod>
   </url><url>
-    <loc>https://example.org/projects/</loc>
+    <loc>https://atarbinian.com/projects/</loc>
     <lastmod>2023-01-01T08:30:00-07:00</lastmod>
   </url><url>
-    <loc>https://example.org/repo/</loc>
+    <loc>https://atarbinian.com/repo/</loc>
     <lastmod>2023-01-01T08:30:00-07:00</lastmod>
   </url><url>
-    <loc>https://example.org/categories/</loc>
+    <loc>https://atarbinian.com/ms-thesis/</loc>
   </url><url>
-    <loc>https://example.org/cv/experience/company/</loc>
+    <loc>https://atarbinian.com/categories/</loc>
   </url><url>
-    <loc>https://example.org/repo/houdini/</loc>
+    <loc>https://atarbinian.com/cv/experience/company/</loc>
   </url><url>
-    <loc>https://example.org/cv/papers/paper/</loc>
+    <loc>https://atarbinian.com/repo/houdini/</loc>
   </url><url>
-    <loc>https://example.org/cv/projects/project/</loc>
+    <loc>https://atarbinian.com/cv/papers/paper/</loc>
   </url><url>
-    <loc>https://example.org/tags/</loc>
+    <loc>https://atarbinian.com/cv/projects/project/</loc>
   </url><url>
-    <loc>https://example.org/cv/talks/talk/</loc>
+    <loc>https://atarbinian.com/tags/</loc>
   </url><url>
-    <loc>https://example.org/projects/tuas/</loc>
+    <loc>https://atarbinian.com/cv/talks/talk/</loc>
   </url><url>
-    <loc>https://example.org/repo/vaon/</loc>
+    <loc>https://atarbinian.com/projects/tuas/</loc>
   </url><url>
-    <loc>https://example.org/cv/projects/wrath_of_zeus/</loc>
+    <loc>https://atarbinian.com/repo/vaon/</loc>
+  </url><url>
+    <loc>https://atarbinian.com/cv/projects/wrath_of_zeus/</loc>
   </url>
 </urlset>

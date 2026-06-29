@@ -1,5 +1,13 @@
-baseURL = 'https://example.org/'
-languageCode = 'en-us'
-title = 'Anthony Tarbinian'
-theme = 'atar'
-summary = 'hi'
+baseURL = "https://atarbinian.com"
+languageCode = "en-us"
+title = "Anthony Tarbinian"
+theme = "atar"
+# theme = 'paperMod'
+summary = "my personal site and blog"
+
+[markup.goldmark.renderer]
+unsafe = true
+
+[module]
+[[module.imports]]
+path = "github.com/NohamR/hugo-asm-shortcode"

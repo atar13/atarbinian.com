@@ -12,7 +12,6 @@ function setColor(mode) {
 function activateDarkMode() {
     localStorage.setItem("theme", "dark");
     setColor("dark")
-    console.log("hiding sun")
     document.getElementsByClassName("moon-icon")[0].style.display = "block";
     document.getElementsByClassName("sun-icon")[0].style.display = "none";
 }
@@ -20,7 +19,6 @@ function activateDarkMode() {
 function activateLightMode() {
     localStorage.setItem("theme", "light");
     setColor("light")
-    console.log("hiding moon")
     document.getElementsByClassName("moon-icon")[0].style.display = "none";
     document.getElementsByClassName("sun-icon")[0].style.display = "block";
 }

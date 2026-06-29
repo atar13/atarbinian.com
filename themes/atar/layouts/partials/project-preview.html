@@ -3,7 +3,7 @@
   <h1>{{ .LinkTitle }}</h1>
   <p style="color: var(--secondary-text-color)">{{ index .Params.project.skills 0 }}</p>
   {{ with .Params.project.thumbnail }}
-    <img class="repo-thumbnail" src="{{ . }}"/>
+    <img class="project-thumbnail" src="{{ . }}"/>
   {{ end }}
   <br/>
   {{ .Summary }}

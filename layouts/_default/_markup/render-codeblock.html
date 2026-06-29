@@ -1,0 +1,38 @@
+{{ $highlightOpts := dict "style" "github-dark"}}
+{{- $isVerbatim := false -}}
+{{- if isset .Attributes "verbatim" -}}
+    {{- $isVerbatim = .Attributes.verbatim -}}
+{{- end -}}
+
+<figure class="code-figure">
+  {{- with .Attributes.title }}
+      <h4>{{ . }}</h4>
+  {{- end }}
+  {{- if transform.CanHighlight .Type }}
+      {{- with transform.HighlightCodeBlock . $highlightOpts -}}
+          {{ .Wrapped }}
+      {{- end -}}
+  {{- else }}
+      {{/* regular text */}}
+      {{- $themeName := index $highlightOpts "style" -}}
+      {{- $dummyHTML := transform.Highlight "" "text" "style=github-dark" -}}
+      
+      {{- $themeStyle := "" -}}
+      {{- with findRE `style="[^"]+"` $dummyHTML 1 -}}
+          {{- $themeStyle = index . 0 | safeHTMLAttr -}}
+      {{- end -}}
+
+      <div class='no-highlight'>
+      <pre tabindex="0" {{ $themeStyle }} style="padding: 1rem; border-radius: 6px; overflow-x: auto;"><code class="language-text" data-lang="text">{{ .Inner }}</code></pre>
+      <div>
+  {{- end }}
+  {{- with .Attributes.caption }}
+      <figcaption class="code-caption">
+        {{- if $isVerbatim -}}
+            <span style="font-family:monospace;">{{ . }}</span> {{/* As a file name */}}
+        {{- else -}}
+            <span>{{ . | markdownify }}</span> {{/* As a code description */}}
+        {{- end -}}
+      </figcaption>
+  {{- end }}
+</figure>
